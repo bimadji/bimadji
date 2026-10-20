@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Bima Adji Kusuma — computer engineering student di EEPIS, fokus computer vision dan robot soccer">
+  <defs>
+    <clipPath id="page"><rect width="1200" height="400" rx="18"/></clipPath>
+    <style>
+      .mono  { font-family: "Courier New", Courier, monospace; }
+      .sans  { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      .kick  { font-size: 11px; letter-spacing: 3.5px; fill: #8a7f68; }
+      .name  { font-size: 60px; font-weight: 800; letter-spacing: -1px; fill: #1b1813; }
+      .role  { font-size: 16px; fill: #6b6252; }
+      .meta  { font-size: 12px; letter-spacing: 3px; fill: #8a7f68; }
+      .lab   { font-size: 10.5px; letter-spacing: 2.5px; fill: #9a8f77; }
+      .val   { font-size: 19px; font-weight: 600; fill: #2b2519; }
+    </style>
+  </defs>
+
+  <g clip-path="url(#page)">
+    <rect width="1200" height="400" fill="#f6f1e6"/>
+
+    <!-- left: name block -->
+    <text class="mono kick" x="64" y="64">COMPUTER ENGINEERING &#183; EEPIS</text>
+    <text class="sans name" x="62" y="152">BIMA ADJI</text>
+    <text class="sans name" x="62" y="212">KUSUMA</text>
+    <rect x="64" y="232" width="96" height="4" fill="#27AE60"/>
+    <text class="sans role" x="64" y="274">Computer engineering student, focusing on vision for robot soccer.</text>
+    <text class="mono meta" x="64" y="352">INDONESIA &#183; GITHUB @BIMADJI</text>
+
+    <!-- divider -->
+    <line x1="614" y1="44" x2="614" y2="356" stroke="#d9cfb8"/>
+
+    <!-- right: meta rows -->
+    <line x1="660" y1="96" x2="1136" y2="96" stroke="#d9cfb8"/>
+    <text class="mono lab" x="660" y="122">FOCUS</text>
+    <text class="sans val" x="660" y="148">Computer vision, robot soccer</text>
+
+    <line x1="660" y1="172" x2="1136" y2="172" stroke="#d9cfb8"/>
+    <text class="mono lab" x="660" y="198">STACK</text>
+    <text class="sans val" x="660" y="224">C&#43;&#43; &#183; Python &#183; Flutter &#183; TypeScript</text>
+
+    <line x1="660" y1="248" x2="1136" y2="248" stroke="#d9cfb8"/>
+    <text class="mono lab" x="660" y="274">BUILDING</text>
+    <text class="sans val" x="660" y="300">Lab systems, POS, face detection</text>
+
+    <line x1="660" y1="324" x2="1136" y2="324" stroke="#d9cfb8"/>
+  </g>
+
+  <rect x="0.5" y="0.5" width="1199" height="399" rx="17.5" fill="none" stroke="#ddd3bd"/>
+</svg>
