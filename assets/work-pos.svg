@@ -1,63 +1,106 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340" role="img" aria-label="Ilustrasi pos-app-flutter: layar pesanan customer dan dashboard kasir">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-label="Ilustrasi pos-app-flutter: keranjang customer dan antrean pesanan kasir">
   <defs>
+    <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2ecdd"/>
+      <stop offset="1" stop-color="#e8dfca"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#11161a"/>
+      <stop offset="1" stop-color="#0b0f11"/>
+    </linearGradient>
+    <filter id="lift" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#4a3f2a" flood-opacity="0.22"/>
+    </filter>
+    <filter id="liftSm" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#4a3f2a" flood-opacity="0.20"/>
+    </filter>
     <style>
-      .mono { font-family: "Courier New", Courier, monospace; }
-      .sans { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-      .num  { font-size: 11px; letter-spacing: 3px; fill: #9a8f77; }
-      .hdr  { font-size: 11px; letter-spacing: 2px; fill: #9a8f77; }
-      .item { font-size: 12.5px; fill: #1b1813; }
-      .muted{ font-size: 11.5px; fill: #6b6252; }
-      .big  { font-size: 26px; font-weight: 700; fill: #1b1813; }
-      .val  { font-size: 12.5px; fill: #2b2519; }
-      .chip { font-size: 10.5px; fill: #1f8a4c; }
-      .chip2{ font-size: 10.5px; fill: #b45309; }
-      .chip3{ font-size: 10.5px; fill: #1d4ed8; }
-      .light{ font-size: 12px; fill: #ffffff; }
-      .dark { font-size: 12px; fill: #0f1311; }
+      .s  { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      .m  { font-family: "SFMono-Regular", Menlo, "Courier New", monospace; }
+      .t  { font-size: 14px; fill: #e9efeb; }
+      .t2 { font-size: 12px; fill: #93a09a; }
+      .th { font-size: 16px; font-weight: 700; fill: #f3f7f4; }
+      .col{ font-size: 10.5px; letter-spacing: 1.6px; fill: #7d8a84; }
+      .big{ font-size: 30px; font-weight: 700; fill: #f3f7f4; }
+      .cap{ font-size: 13.5px; font-weight: 700; fill: #2b2519; }
+      .capm{ font-size: 10.5px; letter-spacing: 1.8px; fill: #8a7f68; }
+      
     </style>
   </defs>
-  <rect width="1200" height="340" rx="14" fill="#f6f1e6"/>
+  <rect width="1200" height="420" fill="url(#stage)"/>
 
-  <text class="mono num" x="48" y="48">01 / REALTIME POS</text>
-
-  <!-- phone -->
-  <rect x="64" y="76" width="260" height="236" rx="24" fill="#fffdf8" stroke="#d9cfb8" stroke-width="1.5"/>
-  <rect x="76" y="88" width="236" height="212" rx="14" fill="#ffffff" stroke="#eee6d4"/>
-  <path d="M76 102 a14 14 0 0 1 14 -14 h208 a14 14 0 0 1 14 14 v30 h-236 z" fill="#27AE60"/>
-  <text class="sans light" x="92" y="118" font-weight="700">Meja 05 &#183; Budi</text>
-  <text class="sans item" x="92" y="150">Nasi Goreng &#215;2</text>
-    <text class="sans muted" x="296" y="150" text-anchor="end">Rp30.000</text>
-<text class="sans item" x="92" y="182">Es Teh &#215;2</text>
-    <text class="sans muted" x="296" y="182" text-anchor="end">Rp10.000</text>
-<text class="sans item" x="92" y="214">Keripik</text>
-    <text class="sans muted" x="296" y="214" text-anchor="end">Rp4.000</text>
-  <line x1="92" y1="236" x2="296" y2="236" stroke="#eee6d4"/>
-  <text class="sans item" x="92" y="258" font-weight="700">Total</text>
-  <text class="sans item" x="296" y="258" text-anchor="end" font-weight="700">Rp44.000</text>
-  <rect x="92" y="270" width="204" height="26" rx="8" fill="#27AE60"/>
-  <text class="sans light" x="194" y="287" text-anchor="middle">Kirim ke kasir</text>
-
-  <!-- kasir dashboard -->
-  <rect x="404" y="76" width="732" height="236" rx="14" fill="#fffdf8" stroke="#d9cfb8"/>
-  <text class="mono hdr" x="428" y="104">KASIR &#183; PESANAN MASUK</text>
+  <g filter="url(#lift)">
+    <rect x="404" y="64" width="724" height="272" rx="14" fill="#12171a"/>
+    <rect x="404" y="64" width="724" height="34" rx="14" fill="#181e21"/>
+    <rect x="404" y="86" width="724" height="12" fill="#181e21"/>
+    <line x1="404" y1="98" x2="1128" y2="98" stroke="#000000" stroke-opacity="0.5"/>
+    <circle cx="424" cy="81" r="4.5" fill="#e06c5f"/>
+    <circle cx="440" cy="81" r="4.5" fill="#d9a441"/>
+    <circle cx="456" cy="81" r="4.5" fill="#4fa86b"/>
+    <text class="m" x="474" y="85" font-size="11" fill="#8b969b">pos &#183; pesanan masuk</text>
+    <text class="m" x="1108" y="85" font-size="10.5" letter-spacing="1.4" fill="#7d8a84" text-anchor="end">LIVE</text>
+  </g>
+  <text class="m" x="436" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84">MEJA</text>
+  <text class="m" x="536" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84">ITEM</text>
+  <text class="m" x="782" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84" text-anchor="end">TOTAL</text>
+  <text class="m" x="900" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84" text-anchor="end">WAKTU</text>
+  <text class="m" x="1084" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84" text-anchor="end">STATUS</text>
   
-    <rect x="428" y="118" width="684" height="52" rx="10" fill="#ffffff" stroke="#eee6d4"/>
-    <text class="sans item" x="448" y="140">Meja 05</text>
-    <text class="sans muted" x="448" y="157">Rp44.000 &#183; 2 item</text>
-    <rect x="1000" y="132" width="96" height="24" rx="12" fill="#fdf1dd" stroke="#e8cfa4"/>
-    <text class="sans chip2" x="1048" y="148" text-anchor="middle">menunggu</text>
+    <rect x="416" y="138" width="692" height="42" rx="9" fill="#171d20" stroke="#ffffff" stroke-opacity="0.05"/>
+    <text class="s" x="436" y="164" font-size="13.5" fill="#e9efeb">Meja 05</text>
+    <text class="s" x="536" y="164" font-size="12.5" fill="#93a09a">3 item</text>
+    <text class="s" x="782" y="164" text-anchor="end" font-size="13.5" fill="#dfe7e2">Rp44.000</text>
+    <text class="m" x="900" y="164" text-anchor="end" font-size="11" fill="#7d8a84">12:04</text>
+    
+    <rect x="1000" y="147" width="88" height="24" rx="12" fill="#3b2f1c" stroke="#6b5527"/>
+    <text class="s" x="1044.0" y="163.5" text-anchor="middle" font-size="11" font-weight="600" fill="#f2c078">menunggu</text>
+    <rect x="416" y="188" width="692" height="42" rx="9" fill="#171d20" stroke="#ffffff" stroke-opacity="0.05"/>
+    <text class="s" x="436" y="214" font-size="13.5" fill="#e9efeb">Meja 02</text>
+    <text class="s" x="536" y="214" font-size="12.5" fill="#93a09a">1 item</text>
+    <text class="s" x="782" y="214" text-anchor="end" font-size="13.5" fill="#dfe7e2">Rp26.000</text>
+    <text class="m" x="900" y="214" text-anchor="end" font-size="11" fill="#7d8a84">12:01</text>
+    
+    <rect x="1000" y="197" width="88" height="24" rx="12" fill="#1d2740" stroke="#3c4c6d"/>
+    <text class="s" x="1044.0" y="213.5" text-anchor="middle" font-size="11" font-weight="600" fill="#8fb4ff">diproses</text>
+    <rect x="416" y="238" width="692" height="42" rx="9" fill="#171d20" stroke="#ffffff" stroke-opacity="0.05"/>
+    <text class="s" x="436" y="264" font-size="13.5" fill="#e9efeb">Meja 07</text>
+    <text class="s" x="536" y="264" font-size="12.5" fill="#93a09a">4 item</text>
+    <text class="s" x="782" y="264" text-anchor="end" font-size="13.5" fill="#dfe7e2">Rp61.000</text>
+    <text class="m" x="900" y="264" text-anchor="end" font-size="11" fill="#7d8a84">11:58</text>
+    
+    <rect x="1000" y="247" width="88" height="24" rx="12" fill="#17301f" stroke="#2f5a3d"/>
+    <text class="s" x="1044.0" y="263.5" text-anchor="middle" font-size="11" font-weight="600" fill="#68d99a">selesai</text>
+  <text class="m" x="436" y="316" font-size="10.5" fill="#8a968f">ws://0.0.0.0:8080 &#183; 3 pesanan aktif</text>
 
-    <rect x="428" y="180" width="684" height="52" rx="10" fill="#ffffff" stroke="#eee6d4"/>
-    <text class="sans item" x="448" y="202">Meja 02</text>
-    <text class="sans muted" x="448" y="219">Rp26.000 &#183; 1 item</text>
-    <rect x="1000" y="194" width="96" height="24" rx="12" fill="#e8effd" stroke="#c9d8f7"/>
-    <text class="sans chip3" x="1048" y="210" text-anchor="middle">diproses</text>
+  <!-- customer phone -->
+  <g filter="url(#liftSm)">
+    <rect x="72" y="64" width="240" height="272" rx="30" fill="#12171a"/>
+    <rect x="80" y="72" width="224" height="256" rx="23" fill="url(#screen)"/>
+    <rect x="160" y="80" width="64" height="6" rx="3" fill="#22292c"/>
+  </g>
+  <text class="s th" x="96" y="122">Meja 05</text>
+  <text class="s" x="96" y="141" font-size="11.5" fill="#93a09a">Budi &#183; 3 item</text>
+  <line x1="96" y1="154" x2="288" y2="154" stroke="#ffffff" stroke-opacity="0.08"/>
+      <text class="s" x="96" y="166" font-size="13.5" fill="#dfe7e2">Nasi Goreng &#215;2</text>
+    <text class="s" x="288" y="166" text-anchor="end" font-size="13.5" fill="#a9b5af">Rp30.000</text>
+    <text class="s" x="96" y="192" font-size="13.5" fill="#dfe7e2">Es Teh &#215;2</text>
+    <text class="s" x="288" y="192" text-anchor="end" font-size="13.5" fill="#a9b5af">Rp10.000</text>
+    <text class="s" x="96" y="218" font-size="13.5" fill="#dfe7e2">Keripik</text>
+    <text class="s" x="288" y="218" text-anchor="end" font-size="13.5" fill="#a9b5af">Rp4.000</text>
+  <line x1="96" y1="238" x2="288" y2="238" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text class="s" x="96" y="262" font-size="12.5" fill="#93a09a">Total</text>
+  <text class="s" x="288" y="262" text-anchor="end" font-size="16" font-weight="700" fill="#f3f7f4">Rp44.000</text>
+  <rect x="96" y="276" width="192" height="36" rx="10" fill="#27AE60"/>
+  <text class="s" x="192" y="299" text-anchor="middle" font-size="13.5" font-weight="700" fill="#06210f">Kirim ke kasir</text>
 
-    <rect x="428" y="242" width="684" height="52" rx="10" fill="#ffffff" stroke="#eee6d4"/>
-    <text class="sans item" x="448" y="264">Meja 07</text>
-    <text class="sans muted" x="448" y="281">Rp61.000 &#183; 4 item</text>
-    <rect x="1000" y="256" width="96" height="24" rx="12" fill="#e8f5ec" stroke="#bfe3cd"/>
-    <text class="sans chip" x="1048" y="272" text-anchor="middle">selesai</text>
+  <!-- realtime link -->
+  <path d="M312 300 C352 300 352 150 396 150" fill="none" stroke="#27AE60" stroke-width="1.6" stroke-dasharray="5 5"/>
+  <circle cx="312" cy="300" r="3" fill="#27AE60"/>
+  <circle cx="396" cy="150" r="3" fill="#27AE60"/>
+  <text class="m" x="332" y="238" font-size="10" fill="#276b47">cart_update</text>
 
-  <rect x="0.5" y="0.5" width="1199" height="339" rx="13.5" fill="none" stroke="#ddd3bd"/>
+  <text class="s cap" x="64" y="392">pos-app-flutter</text>
+  <text class="m capm" x="1136" y="392" text-anchor="end">FLUTTER &#183; NODE.JS &#183; MYSQL</text>
+
+  <rect x="0.5" y="0.5" width="1199" height="419" rx="15" fill="none" stroke="#ddd3bd"/>
 </svg>
