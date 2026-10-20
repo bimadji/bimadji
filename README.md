@@ -65,4 +65,6 @@ Booking, inventory, and attendance for the PENS robotics lab, with role based ac
 
 ## Contact
 
-Email: [bimaadjikusuma@gmail.com](mailto:bimaadjikusuma@gmail.com)
+Interested in working together? Let's talk.
+
+[bimaadjikusuma@gmail.com](mailto:bimaadjikusuma@gmail.com) · [LinkedIn](https://www.linkedin.com/in/bima-adji)
