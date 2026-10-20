@@ -14,9 +14,26 @@
 
 ## Selected work
 
-- [pos-app-flutter](https://github.com/bimadji/pos-app-flutter) — Realtime point of sale: customers order from the table, cashier confirms over WebSocket. `Flutter` `Node.js` `MySQL`
-- [Monocular-Distance-Estimation---YoloV8](https://github.com/bimadji/Monocular-Distance-Estimation---YoloV8) — Distance to an object from one webcam, calibrated once with the pinhole model. `C++` `OpenCV` `YOLOv8`
-- [LabManage](https://github.com/bimadji/LabManage) — Facility booking, component inventory, and attendance for the PENS robotics lab. `React` `Express` `Supabase`
+### [pos-app-flutter](https://github.com/bimadji/pos-app-flutter)
+
+Realtime point of sale. Customers order from the table, the cashier sees it instantly and confirms over WebSocket. `Flutter` `Node.js` `MySQL`
+
+<img src="assets/work-pos.svg" alt="Layar pesanan customer dan dashboard kasir dengan status pesanan" width="100%">
+
+### [Monocular-Distance-Estimation---YoloV8](https://github.com/bimadji/Monocular-Distance-Estimation---YoloV8)
+
+Distance to an object from one webcam. YOLOv8 draws the box, the box height goes into the pinhole formula, one calibration sets the focal length. `C++` `OpenCV` `YOLOv8`
+
+<img src="assets/work-monocular.svg" alt="Bingkai deteksi berlabel jarak dan diagram pinhole" width="100%">
+
+### [LabManage](https://github.com/bimadji/LabManage)
+
+Booking, inventory, and attendance for the PENS robotics lab, with role based access and a request flow for borrowing components. `React` `Express` `Supabase`
+
+<img src="assets/work-labmanage.svg" alt="Jadwal mingguan lab dan daftar inventaris komponen" width="100%">
+
+### More work
+
 - [Sistem-Pendataan-UKM-Desa---Flutter](https://github.com/bimadji/Sistem-Pendataan-UKM-Desa---Flutter) — Village SME data collection, port of the SIPUDESA web app. `Flutter` `SQLite`
 - [oamp-face-camera](https://github.com/bimadji/oamp-face-camera) — Camera app built on YOLOv5 detection, with a GUI and audio feedback per level. `Python` `YOLOv5`
 - [MakanApa](https://github.com/Ivanadrian31/MakanApa) — Terminal picker for what to eat, with budget filters, tags, and history. `Shell` `bats`
