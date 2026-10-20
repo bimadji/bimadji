@@ -6,9 +6,8 @@
 <p align="center">Computer engineering student at EEPIS. I build vision software for the middle-size robot soccer team, and apps that get used for real work.</p>
 
 <p align="center">
-  <a href="mailto:bimaadjikusuma@gmail.com">Email</a> ·
   <a href="https://github.com/bimadji?tab=repositories">Repositories</a> ·
-  <a href="https://github.com/feboyfierlyan/dealcompass">DealCompass</a>
+  <a href="https://www.linkedin.com/in/bima-adji">LinkedIn</a>
 </p>
 
 ---
@@ -20,6 +19,7 @@
 - [LabManage](https://github.com/bimadji/LabManage) — Facility booking, component inventory, and attendance for the PENS robotics lab. `React` `Express` `Supabase`
 - [Sistem-Pendataan-UKM-Desa---Flutter](https://github.com/bimadji/Sistem-Pendataan-UKM-Desa---Flutter) — Village SME data collection, port of the SIPUDESA web app. `Flutter` `SQLite`
 - [oamp-face-camera](https://github.com/bimadji/oamp-face-camera) — Camera app built on YOLOv5 detection, with a GUI and audio feedback per level. `Python` `YOLOv5`
+- [MakanApa](https://github.com/Ivanadrian31/MakanApa) — Terminal picker for what to eat, with budget filters, tags, and history. `Shell` `bats`
 - [dealcompass](https://github.com/feboyfierlyan/dealcompass) — Sales decision workspace on context graphs, built with the team at Hackathon PENS 2026. `Python`
 
 ---
@@ -41,7 +41,7 @@
 
 ## Now
 
-- Training vision for the middle-size robot soccer team at PENS
+- Developing [MakanApa](https://github.com/Ivanadrian31/MakanApa), a terminal picker for what to eat
 - Keeping [LabManage](https://github.com/bimadji/LabManage) running for the robotics lab: bookings, inventory, attendance
 
 ---
