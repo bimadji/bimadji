@@ -8,8 +8,8 @@
       <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#4a3f2a" flood-opacity="0.22"/>
     </filter>
     <style>
-      .s  { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-      .m  { font-family: "SFMono-Regular", Menlo, "Courier New", monospace; }
+      .s  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+      .m  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
       .cap{ font-size: 13.5px; font-weight: 700; fill: #2b2519; }
       .capm{ font-size: 10.5px; letter-spacing: 1.8px; fill: #6f6753; }
     </style>

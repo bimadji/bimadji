@@ -15,8 +15,8 @@
       <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#4a3f2a" flood-opacity="0.20"/>
     </filter>
     <style>
-      .s  { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
-      .m  { font-family: "SFMono-Regular", Menlo, "Courier New", monospace; }
+      .s  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+      .m  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
       .t  { font-size: 14px; fill: #e9efeb; }
       .t2 { font-size: 12px; fill: #93a09a; }
       .th { font-size: 16px; font-weight: 700; fill: #f3f7f4; }

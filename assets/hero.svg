@@ -2,8 +2,8 @@
   <defs>
     <clipPath id="page"><rect width="1200" height="400" rx="18"/></clipPath>
     <style>
-      .mono  { font-family: "Courier New", Courier, monospace; }
-      .sans  { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      .mono  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+      .sans  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
       .kick  { font-size: 11px; letter-spacing: 3.5px; fill: #8a7f68; }
       .name  { font-size: 60px; font-weight: 800; letter-spacing: -1px; fill: #1b1813; }
       .role  { font-size: 16px; fill: #6b6252; }
