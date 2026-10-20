@@ -1,47 +1,80 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Bima Adji Kusuma — computer engineering student di EEPIS, fokus computer vision dan robot soccer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Bima Adji Kusuma, computer engineering student di EEPIS, fokus computer vision dan robot soccer">
   <defs>
-    <clipPath id="page"><rect width="1200" height="400" rx="18"/></clipPath>
+    <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f2ecdd"/>
+      <stop offset="1" stop-color="#e8dfca"/>
+    </linearGradient>
+    <linearGradient id="screen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#11161a"/>
+      <stop offset="1" stop-color="#0b0f11"/>
+    </linearGradient>
+    <filter id="lift" x="-20%" y="-20%" width="140%" height="150%">
+      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#4a3f2a" flood-opacity="0.22"/>
+    </filter>
     <style>
-      .mono  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
-      .sans  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
-      .kick  { font-size: 11px; letter-spacing: 3.5px; fill: #8a7f68; }
-      .name  { font-size: 60px; font-weight: 800; letter-spacing: -1px; fill: #1b1813; }
-      .role  { font-size: 16px; fill: #6b6252; }
-      .meta  { font-size: 12px; letter-spacing: 3px; fill: #8a7f68; }
-      .lab   { font-size: 10.5px; letter-spacing: 2.5px; fill: #9a8f77; }
-      .val   { font-size: 19px; font-weight: 600; fill: #2b2519; }
+      .s  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+      .m  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+      .name{ font-size: 56px; font-weight: 800; fill: #f3f7f4; letter-spacing: -1px; }
+      .role{ font-size: 15px; fill: #e9efeb; }
+      .sub { font-size: 13px; fill: #93a09a; }
+      .lab { font-size: 10.5px; letter-spacing: 2px; fill: #8a968f; }
+      .val { font-size: 13px; fill: #e9efeb; }
+      .tag { font-size: 11.5px; fill: #93a09a; }
+      .foot{ font-size: 10.5px; letter-spacing: 2px; fill: #6f6753; }
     </style>
   </defs>
 
-  <g clip-path="url(#page)">
-    <rect width="1200" height="400" fill="#f6f1e6"/>
+  <rect width="1200" height="400" fill="url(#stage)"/>
 
-    <!-- left: name block -->
-    <text class="mono kick" x="64" y="64">COMPUTER ENGINEERING &#183; EEPIS</text>
-    <text class="sans name" x="62" y="152">BIMA ADJI</text>
-    <text class="sans name" x="62" y="212">KUSUMA</text>
-    <rect x="64" y="232" width="96" height="4" fill="#27AE60"/>
-    <text class="sans role" x="64" y="274">Computer engineering student, focusing on vision for robot soccer.</text>
-    <text class="mono meta" x="64" y="352">INDONESIA &#183; GITHUB @BIMADJI</text>
-
-    <!-- divider -->
-    <line x1="614" y1="44" x2="614" y2="356" stroke="#d9cfb8"/>
-
-    <!-- right: meta rows -->
-    <line x1="660" y1="96" x2="1136" y2="96" stroke="#d9cfb8"/>
-    <text class="mono lab" x="660" y="122">FOCUS</text>
-    <text class="sans val" x="660" y="148">Computer vision, robot soccer</text>
-
-    <line x1="660" y1="172" x2="1136" y2="172" stroke="#d9cfb8"/>
-    <text class="mono lab" x="660" y="198">STACK</text>
-    <text class="sans val" x="660" y="224">C&#43;&#43; &#183; Python &#183; Flutter &#183; TypeScript</text>
-
-    <line x1="660" y1="248" x2="1136" y2="248" stroke="#d9cfb8"/>
-    <text class="mono lab" x="660" y="274">BUILDING</text>
-    <text class="sans val" x="660" y="300">Lab systems, POS, face detection</text>
-
-    <line x1="660" y1="324" x2="1136" y2="324" stroke="#d9cfb8"/>
+  <!-- portrait window -->
+  <g filter="url(#lift)">
+    <rect x="64" y="48" width="600" height="272" rx="14" fill="#12171a"/>
+    <rect x="64" y="48" width="600" height="34" rx="14" fill="#181e21"/>
+    <rect x="64" y="70" width="600" height="12" fill="#181e21"/>
+    <line x1="64" y1="82" x2="664" y2="82" stroke="#000000" stroke-opacity="0.5"/>
+    <circle cx="84" cy="65" r="4.5" fill="#e06c5f"/>
+    <circle cx="100" cy="65" r="4.5" fill="#d9a441"/>
+    <circle cx="116" cy="65" r="4.5" fill="#4fa86b"/>
+    <text class="m" x="134" y="69" font-size="11" fill="#8b969b">bimadji &#183; profile</text>
+    <rect x="604" y="54" width="44" height="20" rx="10" fill="#17301f" stroke="#2f5a3d"/>
+    <text class="m" x="626" y="68" text-anchor="middle" font-size="9" letter-spacing="1" fill="#4ade80">OPEN</text>
   </g>
 
-  <rect x="0.5" y="0.5" width="1199" height="399" rx="17.5" fill="none" stroke="#ddd3bd"/>
+  <text class="m lab" x="88" y="112">COMPUTER ENGINEERING &#183; EEPIS</text>
+  <text class="s name" x="86" y="178">Bima Adji</text>
+  <text class="s name" x="86" y="240">Kusuma</text>
+  <rect x="88" y="256" width="72" height="3" fill="#68d99a"/>
+  <text class="s role" x="88" y="288">Robot soccer vision, and apps that ship</text>
+
+  <!-- avatar tile -->
+  <g filter="url(#lift)">
+    <rect x="700" y="48" width="204" height="272" rx="14" fill="url(#screen)"/>
+  </g>
+  <rect x="760" y="96" width="84" height="84" rx="42" fill="#17301f" stroke="#2f5a3d"/>
+  <text class="s" x="802" y="152" text-anchor="middle" font-size="34" font-weight="700" fill="#68d99a">B</text>
+  <text class="s val" x="802" y="212" text-anchor="middle" font-size="14" font-weight="700">Bima Adji Kusuma</text>
+  <text class="m" x="802" y="232" text-anchor="middle" font-size="10" letter-spacing="1.4" fill="#8a968f">@BIMADJI</text>
+  <line x1="732" y1="252" x2="872" y2="252" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text class="s tag" x="802" y="272" text-anchor="middle">Indonesia</text>
+  <text class="s" x="802" y="294" text-anchor="middle" font-size="11.5" fill="#4ade80">github.com/bimadji</text>
+
+  <!-- facts rail -->
+  <g filter="url(#lift)">
+    <rect x="932" y="48" width="204" height="272" rx="14" fill="url(#screen)"/>
+  </g>
+  <text class="m lab" x="956" y="86">FOCUS</text>
+  <text class="s val" x="956" y="108">Computer vision</text>
+  <text class="s sub" x="956" y="126">robot soccer</text>
+  <line x1="956" y1="146" x2="1112" y2="146" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text class="m lab" x="956" y="172">STACK</text>
+  <text class="s val" x="956" y="194">C++ &#183; Python</text>
+  <text class="s val" x="956" y="214">Flutter &#183; TS</text>
+  <line x1="956" y1="234" x2="1112" y2="234" stroke="#ffffff" stroke-opacity="0.08"/>
+  <text class="m lab" x="956" y="260">BUILDING</text>
+  <text class="s val" x="956" y="282">LabManage</text>
+  <text class="s val" x="956" y="302">MakanApa</text>
+
+  <text class="m foot" x="64" y="360">SURABAYA, INDONESIA</text>
+  <text class="m foot" x="1136" y="360" text-anchor="end">BIMAADJIKUSUMA@GMAIL.COM</text>
+  <rect x="0.5" y="0.5" width="1199" height="399" rx="15" fill="none" stroke="#ddd3bd"/>
 </svg>
