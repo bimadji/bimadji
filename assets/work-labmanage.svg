@@ -115,6 +115,6 @@
   <text class="s" x="1064" y="304" text-anchor="middle" font-size="10" font-weight="700" fill="#06210f">Setuju</text>
 
   <text class="s cap" x="64" y="392">LabManage</text>
-  <text class="m capm" x="1136" y="392" text-anchor="end">REACT &#183; EXPRESS &#183; SUPABASE</text>
+  <text class="m capm" x="1136" y="392" text-anchor="end">NEXT.JS &#183; SUPABASE &#183; POSTGRESQL</text>
   <rect x="0.5" y="0.5" width="1199" height="419" rx="15" fill="none" stroke="#ddd3bd"/>
 </svg>
