@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Bima Adji Kusuma, computer engineering student di EEPIS, fokus computer vision dan robot soccer">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400" width="1200" height="400" role="img" aria-label="Bima Adji Kusuma, computer engineering student di PENS, fokus backend development dengan latar belakang computer vision dan robot soccer">
   <defs>
     <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#f2ecdd"/>
@@ -12,15 +12,15 @@
       <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#4a3f2a" flood-opacity="0.22"/>
     </filter>
     <style>
-      .s  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
-      .m  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+      .s   { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+      .m   { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
       .name{ font-size: 56px; font-weight: 800; fill: #f3f7f4; letter-spacing: -1px; }
       .role{ font-size: 15px; fill: #e9efeb; }
       .sub { font-size: 13px; fill: #93a09a; }
       .lab { font-size: 10.5px; letter-spacing: 2px; fill: #8a968f; }
       .val { font-size: 13px; fill: #e9efeb; }
       .tag { font-size: 11.5px; fill: #93a09a; }
-      .foot{ font-size: 10.5px; letter-spacing: 2px; fill: #6f6753; }
+      .foot{ font-size: 10.5px; letter-spacing: 2px; fill: #5c5443; }
     </style>
   </defs>
 
@@ -36,15 +36,15 @@
     <circle cx="100" cy="65" r="4.5" fill="#d9a441"/>
     <circle cx="116" cy="65" r="4.5" fill="#4fa86b"/>
     <text class="m" x="134" y="69" font-size="11" fill="#8b969b">bimadji &#183; profile</text>
-    <rect x="604" y="54" width="44" height="20" rx="10" fill="#17301f" stroke="#2f5a3d"/>
-    <text class="m" x="626" y="68" text-anchor="middle" font-size="9" letter-spacing="1" fill="#4ade80">OPEN</text>
+    <rect x="584" y="54" width="64" height="20" rx="10" fill="#17301f" stroke="#2f5a3d"/>
+    <text class="m" x="616" y="68" text-anchor="middle" font-size="9" letter-spacing="1" fill="#4ade80">BACKEND</text>
   </g>
 
-  <text class="m lab" x="88" y="112">COMPUTER ENGINEERING &#183; EEPIS</text>
+  <text class="m lab" x="88" y="112">COMPUTER ENGINEERING &#183; PENS</text>
   <text class="s name" x="86" y="178">Bima Adji</text>
   <text class="s name" x="86" y="240">Kusuma</text>
   <rect x="88" y="256" width="72" height="3" fill="#68d99a"/>
-  <text class="s role" x="88" y="288">Robot soccer vision, and apps that ship</text>
+  <text class="s role" x="88" y="288">Backend development, with a robotics vision background</text>
 
   <!-- avatar tile -->
   <g filter="url(#lift)">
@@ -63,16 +63,16 @@
     <rect x="932" y="48" width="204" height="272" rx="14" fill="url(#screen)"/>
   </g>
   <text class="m lab" x="956" y="86">FOCUS</text>
-  <text class="s val" x="956" y="108">Computer vision</text>
-  <text class="s sub" x="956" y="126">robot soccer</text>
+  <text class="s val" x="956" y="108">Backend systems</text>
+  <text class="s sub" x="956" y="126">vision &amp; robotics</text>
   <line x1="956" y1="146" x2="1112" y2="146" stroke="#ffffff" stroke-opacity="0.08"/>
   <text class="m lab" x="956" y="172">STACK</text>
-  <text class="s val" x="956" y="194">C++ &#183; Python</text>
-  <text class="s val" x="956" y="214">Flutter &#183; TS</text>
+  <text class="s val" x="956" y="194">Python &#183; FastAPI</text>
+  <text class="s val" x="956" y="214">Postgres &#183; C++</text>
   <line x1="956" y1="234" x2="1112" y2="234" stroke="#ffffff" stroke-opacity="0.08"/>
-  <text class="m lab" x="956" y="260">BUILDING</text>
-  <text class="s val" x="956" y="282">LabManage</text>
-  <text class="s val" x="956" y="302">MakanApa</text>
+  <text class="m lab" x="956" y="260">RECENT</text>
+  <text class="s val" x="956" y="282">pos-app</text>
+  <text class="s val" x="956" y="302">LabManage</text>
 
   <text class="m foot" x="64" y="360">SURABAYA, INDONESIA</text>
   <text class="m foot" x="1136" y="360" text-anchor="end">BIMAADJIKUSUMA@GMAIL.COM</text>

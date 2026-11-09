@@ -1,9 +1,9 @@
 <p align="center">
-  <img src="assets/hero.svg" alt="Bima Adji Kusuma — computer engineering student, fokus computer vision dan robot soccer" width="100%">
+  <img src="assets/hero.svg" alt="Bima Adji Kusuma, computer engineering student at PENS focusing on backend systems" width="100%">
 </p>
 
 <p align="center"><b>Hey, I'm Bima.</b></p>
-<p align="center">Computer engineering student at EEPIS. I build vision software for the middle-size robot soccer team, and apps that get used for real work.</p>
+<p align="center">Computer engineering student at PENS focusing on backend systems. Former member and Vision Division Coordinator at ERSOW (EEPIS Robot Soccer on Wheeled), with a background in robotics and computer vision.</p>
 
 <p align="center">
   <a href="https://github.com/bimadji?tab=repositories">Repositories</a> ·
@@ -14,52 +14,55 @@
 
 ## Selected work
 
-### [pos-app-flutter](https://github.com/bimadji/pos-app-flutter)
+### [pos-app](https://github.com/bimadji/pos-app)
 
-Realtime point of sale. Customers order from the table, the cashier sees it instantly and confirms over WebSocket. `Flutter` `Node.js` `MySQL`
+Multi-tenant dine-in POS with QR ordering, atomic stock updates, and live kitchen streams via Server-Sent Events. `FastAPI` `PostgreSQL` `Python` `React`
 
-<img src="assets/work-pos.svg" alt="Layar pesanan customer dan dashboard kasir dengan status pesanan" width="100%">
+<img src="assets/work-pos.svg" alt="Denah meja, antrean pesanan kasir, dan ringkasan transaksi" width="100%">
 
 ### [Monocular-Distance-Estimation---YoloV8](https://github.com/bimadji/Monocular-Distance-Estimation---YoloV8)
 
-Distance to an object from one webcam. YOLOv8 draws the box, the box height goes into the pinhole formula, one calibration sets the focal length. `C++` `OpenCV` `YOLOv8`
+Distance estimation from a single webcam using YOLOv8 bounding boxes and a calibrated pinhole camera model in C++. `C++` `OpenCV` `YOLOv8`
 
 <img src="assets/work-monocular.svg" alt="Bingkai deteksi berlabel jarak dan diagram pinhole" width="100%">
 
 ### [LabManage](https://github.com/bimadji/LabManage)
 
-Booking, inventory, and attendance for the PENS robotics lab, with role based access and a request flow for borrowing components. `React` `Express` `Supabase`
+Facility scheduling, hardware inventory, and research attendance for the PENS robotics lab on Supabase Postgres with row-level security. `TypeScript` `Next.js` `Supabase` `PostgreSQL`
 
 <img src="assets/work-labmanage.svg" alt="Jadwal mingguan lab dan daftar inventaris komponen" width="100%">
 
 ### More work
 
-- [Sistem-Pendataan-UKM-Desa---Flutter](https://github.com/bimadji/Sistem-Pendataan-UKM-Desa---Flutter) — Village SME data collection, port of the SIPUDESA web app. `Flutter` `SQLite`
-- [oamp-face-camera](https://github.com/bimadji/oamp-face-camera) — Camera app built on YOLOv5 detection, with a GUI and audio feedback per level. `Python` `YOLOv5`
-- [MakanApa](https://github.com/Ivanadrian31/MakanApa) — Terminal picker for what to eat, with budget filters, tags, and history. `Shell` `bats`
-- [dealcompass](https://github.com/feboyfierlyan/dealcompass) — Sales decision workspace on context graphs, built with the team at Hackathon PENS 2026. `Python`
+- [uangku](https://github.com/bimadji/uangku) - Offline-first personal finance tracking for Android with local parsing and budgeting tools. `Flutter` `Dart`
+- [organize](https://github.com/Ivanadrian31/organize) - Shell utility that sorts directories into category folders by file extension. `Shell` `bats`
+- [Sistem-Pendataan-UKM-Desa---Flutter](https://github.com/bimadji/Sistem-Pendataan-UKM-Desa---Flutter) - Village SME survey and data collection tool backed by SQLite. `Flutter` `SQLite`
+- [oamp-face-camera](https://github.com/bimadji/oamp-face-camera) - Camera utility built on YOLOv5 face detection with audio cue feedback. `Python` `YOLOv5`
+- [dealcompass](https://github.com/feboyfierlyan/dealcompass) - Decision workspace on context graphs, built during Hackathon PENS 2026. `Python`
+- [MakanApa](https://github.com/Ivanadrian31/MakanApa) - Terminal picker for daily meals with budget filters and history. `Shell`
 
 ---
 
 ## Stack
 
 <p align="center">
-  <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white" alt="C++">
   <img src="https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/Flutter-Dart-02569B?logo=flutter&logoColor=white" alt="Flutter">
-  <img src="https://img.shields.io/badge/TypeScript-Node%20React-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/OpenCV-4-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV">
-  <img src="https://img.shields.io/badge/YOLO-detection-111111" alt="YOLO">
-  <img src="https://img.shields.io/badge/MySQL-SQLite-4479A1?logo=mysql&logoColor=white" alt="MySQL and SQLite">
+  <img src="https://img.shields.io/badge/PostgreSQL-15%2B-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/FastAPI-REST%20%26%20SSE-009688?logo=fastapi&logoColor=white" alt="FastAPI">
   <img src="https://img.shields.io/badge/Supabase-Postgres-3FCF8E?logo=supabase&logoColor=white" alt="Supabase">
+  <img src="https://img.shields.io/badge/TypeScript-Node%20React-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/SQLite-Mobile%20Local-003B57?logo=sqlite&logoColor=white" alt="SQLite">
+  <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white" alt="C++">
+  <img src="https://img.shields.io/badge/ROS-Robotics-22314E?logo=ros&logoColor=white" alt="ROS">
+  <img src="https://img.shields.io/badge/OpenCV-4-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV">
 </p>
 
 ---
 
 ## Now
 
-- Developing [MakanApa](https://github.com/Ivanadrian31/MakanApa), a terminal picker for what to eat
-- Keeping [LabManage](https://github.com/bimadji/LabManage) running for the robotics lab: bookings, inventory, attendance
+- Expanding [pos-app](https://github.com/bimadji/pos-app) with asynchronous kitchen events and order analytics
+- Maintaining [LabManage](https://github.com/bimadji/LabManage) for the PENS robotics lab
 
 ---
 
