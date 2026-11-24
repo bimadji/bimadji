@@ -1,0 +1,44 @@
+name: Update Profile Widgets
+
+on:
+  schedule:
+    - cron: "15 0 * * *"
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "scripts/generate_profile_widgets.py"
+      - ".github/workflows/update-profile.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update-widgets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate Code Pet and Contribution City SVGs
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python scripts/generate_profile_widgets.py --username bimadji --output-dir assets
+
+      - name: Commit and push updated SVGs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/code-pet-dark.svg assets/code-pet-light.svg assets/contribution-city-dark.svg assets/contribution-city-light.svg
+          if git diff --cached --quiet; then
+            echo "No widget changes to commit."
+          else
+            git commit -m "chore(widgets): update Code Pet and Contribution City SVGs"
+            git push
+          fi
