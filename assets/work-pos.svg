@@ -1,106 +1,110 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 420" width="1200" height="420" role="img" aria-label="Ilustrasi pos-app: keranjang customer meja dan antrean pesanan kasir live">
   <defs>
-    <linearGradient id="stage" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#f2ecdd"/>
-      <stop offset="1" stop-color="#e8dfca"/>
+    <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#061519"/>
+      <stop offset="52%" stop-color="#0B2429"/>
+      <stop offset="100%" stop-color="#051216"/>
     </linearGradient>
     <linearGradient id="screen" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#11161a"/>
-      <stop offset="1" stop-color="#0b0f11"/>
+      <stop offset="0%" stop-color="#0D2329"/>
+      <stop offset="100%" stop-color="#08171B"/>
     </linearGradient>
+    <radialGradient id="auroraGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#2DD4BF" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#2DD4BF" stop-opacity="0"/>
+    </radialGradient>
     <filter id="lift" x="-20%" y="-20%" width="140%" height="160%">
-      <feDropShadow dx="0" dy="16" stdDeviation="18" flood-color="#4a3f2a" flood-opacity="0.22"/>
+      <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#02080A" flood-opacity="0.52"/>
     </filter>
     <filter id="liftSm" x="-30%" y="-30%" width="160%" height="170%">
-      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#4a3f2a" flood-opacity="0.20"/>
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#02080A" flood-opacity="0.48"/>
     </filter>
     <style>
-      .s  { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
-      .m  { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
-      .t  { font-size: 14px; fill: #e9efeb; }
-      .t2 { font-size: 12px; fill: #93a09a; }
-      .th { font-size: 16px; font-weight: 700; fill: #f3f7f4; }
-      .col{ font-size: 10.5px; letter-spacing: 1.6px; fill: #7d8a84; }
-      .big{ font-size: 30px; font-weight: 700; fill: #f3f7f4; }
-      .cap{ font-size: 13.5px; font-weight: 700; fill: #2b2519; }
-      .capm{ font-size: 10.5px; letter-spacing: 1.8px; fill: #8a7f68; }
-      
+      .s   { font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+      .m   { font-family: "SFMono-Regular", Menlo, Consolas, monospace; }
+      .th  { font-size: 16px; font-weight: 700; fill: #ECFDF5; }
+      .cap { font-size: 13.5px; font-weight: 700; fill: #ECFDF5; }
+      .capm{ font-size: 10.5px; letter-spacing: 1.8px; fill: #67A8A1; }
     </style>
   </defs>
-  <rect width="1200" height="420" fill="url(#stage)"/>
+
+  <rect width="1200" height="420" rx="16" fill="url(#stage)"/>
+  <ellipse cx="760" cy="210" rx="360" ry="170" fill="url(#auroraGlow)"/>
 
   <g filter="url(#lift)">
-    <rect x="404" y="64" width="724" height="272" rx="14" fill="#12171a"/>
-    <rect x="404" y="64" width="724" height="34" rx="14" fill="#181e21"/>
-    <rect x="404" y="86" width="724" height="12" fill="#181e21"/>
-    <line x1="404" y1="98" x2="1128" y2="98" stroke="#000000" stroke-opacity="0.5"/>
-    <circle cx="424" cy="81" r="4.5" fill="#e06c5f"/>
-    <circle cx="440" cy="81" r="4.5" fill="#d9a441"/>
-    <circle cx="456" cy="81" r="4.5" fill="#4fa86b"/>
-    <text class="m" x="474" y="85" font-size="11" fill="#8b969b">pos &#183; pesanan masuk</text>
-    <text class="m" x="1108" y="85" font-size="10.5" letter-spacing="1.4" fill="#7d8a84" text-anchor="end">LIVE</text>
+    <rect x="404" y="64" width="724" height="272" rx="14" fill="url(#screen)" stroke="#2DD4BF" stroke-opacity="0.22"/>
+    <rect x="404" y="64" width="724" height="34" rx="14" fill="#102B31"/>
+    <rect x="404" y="86" width="724" height="12" fill="#102B31"/>
+    <line x1="404" y1="98" x2="1128" y2="98" stroke="#2DD4BF" stroke-opacity="0.16"/>
+    <circle cx="424" cy="81" r="4.5" fill="#0F766E"/>
+    <circle cx="440" cy="81" r="4.5" fill="#14B8A6"/>
+    <circle cx="456" cy="81" r="4.5" fill="#5EEAD4"/>
+    <text class="m" x="474" y="85" font-size="11" fill="#88B8B2">pos &#183; pesanan masuk</text>
+    <rect x="1064" y="70" width="50" height="20" rx="10" fill="#0D3B38" stroke="#2DD4BF" stroke-opacity="0.55"/>
+    <text class="m" x="1089" y="84" text-anchor="middle" font-size="9.5" letter-spacing="1.2" fill="#5EEAD4">LIVE</text>
   </g>
-  <text class="m" x="436" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84">MEJA</text>
-  <text class="m" x="536" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84">ITEM</text>
-  <text class="m" x="782" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84" text-anchor="end">TOTAL</text>
-  <text class="m" x="900" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84" text-anchor="end">WAKTU</text>
-  <text class="m" x="1084" y="120" font-size="10.5" letter-spacing="1.6" fill="#7d8a84" text-anchor="end">STATUS</text>
-  
-    <rect x="416" y="138" width="692" height="42" rx="9" fill="#171d20" stroke="#ffffff" stroke-opacity="0.05"/>
-    <text class="s" x="436" y="164" font-size="13.5" fill="#e9efeb">Meja 05</text>
-    <text class="s" x="536" y="164" font-size="12.5" fill="#93a09a">3 item</text>
-    <text class="s" x="782" y="164" text-anchor="end" font-size="13.5" fill="#dfe7e2">Rp44.000</text>
-    <text class="m" x="900" y="164" text-anchor="end" font-size="11" fill="#7d8a84">12:04</text>
-    
-    <rect x="1000" y="147" width="88" height="24" rx="12" fill="#3b2f1c" stroke="#6b5527"/>
-    <text class="s" x="1044.0" y="163.5" text-anchor="middle" font-size="11" font-weight="600" fill="#f2c078">menunggu</text>
-    <rect x="416" y="188" width="692" height="42" rx="9" fill="#171d20" stroke="#ffffff" stroke-opacity="0.05"/>
-    <text class="s" x="436" y="214" font-size="13.5" fill="#e9efeb">Meja 02</text>
-    <text class="s" x="536" y="214" font-size="12.5" fill="#93a09a">1 item</text>
-    <text class="s" x="782" y="214" text-anchor="end" font-size="13.5" fill="#dfe7e2">Rp26.000</text>
-    <text class="m" x="900" y="214" text-anchor="end" font-size="11" fill="#7d8a84">12:01</text>
-    
-    <rect x="1000" y="197" width="88" height="24" rx="12" fill="#1d2740" stroke="#3c4c6d"/>
-    <text class="s" x="1044.0" y="213.5" text-anchor="middle" font-size="11" font-weight="600" fill="#8fb4ff">diproses</text>
-    <rect x="416" y="238" width="692" height="42" rx="9" fill="#171d20" stroke="#ffffff" stroke-opacity="0.05"/>
-    <text class="s" x="436" y="264" font-size="13.5" fill="#e9efeb">Meja 07</text>
-    <text class="s" x="536" y="264" font-size="12.5" fill="#93a09a">4 item</text>
-    <text class="s" x="782" y="264" text-anchor="end" font-size="13.5" fill="#dfe7e2">Rp61.000</text>
-    <text class="m" x="900" y="264" text-anchor="end" font-size="11" fill="#7d8a84">11:58</text>
-    
-    <rect x="1000" y="247" width="88" height="24" rx="12" fill="#17301f" stroke="#2f5a3d"/>
-    <text class="s" x="1044.0" y="263.5" text-anchor="middle" font-size="11" font-weight="600" fill="#68d99a">selesai</text>
-  <text class="m" x="436" y="316" font-size="10.5" fill="#8a968f">sse://events &#183; 3 pesanan aktif</text>
+
+  <text class="m" x="436" y="120" font-size="10.5" letter-spacing="1.6" fill="#5EEAD4">MEJA</text>
+  <text class="m" x="536" y="120" font-size="10.5" letter-spacing="1.6" fill="#5EEAD4">ITEM</text>
+  <text class="m" x="782" y="120" font-size="10.5" letter-spacing="1.6" fill="#5EEAD4" text-anchor="end">TOTAL</text>
+  <text class="m" x="900" y="120" font-size="10.5" letter-spacing="1.6" fill="#5EEAD4" text-anchor="end">WAKTU</text>
+  <text class="m" x="1084" y="120" font-size="10.5" letter-spacing="1.6" fill="#5EEAD4" text-anchor="end">STATUS</text>
+
+  <rect x="416" y="138" width="692" height="42" rx="9" fill="#0F282E" stroke="#5EEAD4" stroke-opacity="0.10"/>
+  <text class="s" x="436" y="164" font-size="13.5" fill="#ECFDF5">Meja 05</text>
+  <text class="s" x="536" y="164" font-size="12.5" fill="#88B8B2">3 item</text>
+  <text class="s" x="782" y="164" text-anchor="end" font-size="13.5" fill="#D5F5EE">Rp44.000</text>
+  <text class="m" x="900" y="164" text-anchor="end" font-size="11" fill="#88B8B2">12:04</text>
+  <rect x="1000" y="147" width="88" height="24" rx="12" fill="#2E2616" stroke="#D9A441" stroke-opacity="0.65"/>
+  <text class="s" x="1044" y="163.5" text-anchor="middle" font-size="11" font-weight="600" fill="#FCD34D">menunggu</text>
+
+  <rect x="416" y="188" width="692" height="42" rx="9" fill="#0F282E" stroke="#5EEAD4" stroke-opacity="0.10"/>
+  <text class="s" x="436" y="214" font-size="13.5" fill="#ECFDF5">Meja 02</text>
+  <text class="s" x="536" y="214" font-size="12.5" fill="#88B8B2">1 item</text>
+  <text class="s" x="782" y="214" text-anchor="end" font-size="13.5" fill="#D5F5EE">Rp26.000</text>
+  <text class="m" x="900" y="214" text-anchor="end" font-size="11" fill="#88B8B2">12:01</text>
+  <rect x="1000" y="197" width="88" height="24" rx="12" fill="#0E2D3A" stroke="#38BDF8" stroke-opacity="0.55"/>
+  <text class="s" x="1044" y="213.5" text-anchor="middle" font-size="11" font-weight="600" fill="#7DD3FC">diproses</text>
+
+  <rect x="416" y="238" width="692" height="42" rx="9" fill="#0F282E" stroke="#5EEAD4" stroke-opacity="0.10"/>
+  <text class="s" x="436" y="264" font-size="13.5" fill="#ECFDF5">Meja 07</text>
+  <text class="s" x="536" y="264" font-size="12.5" fill="#88B8B2">4 item</text>
+  <text class="s" x="782" y="264" text-anchor="end" font-size="13.5" fill="#D5F5EE">Rp61.000</text>
+  <text class="m" x="900" y="264" text-anchor="end" font-size="11" fill="#88B8B2">11:58</text>
+  <rect x="1000" y="247" width="88" height="24" rx="12" fill="#0D3B38" stroke="#2DD4BF" stroke-opacity="0.6"/>
+  <text class="s" x="1044" y="263.5" text-anchor="middle" font-size="11" font-weight="600" fill="#5EEAD4">selesai</text>
+
+  <text class="m" x="436" y="316" font-size="10.5" fill="#88B8B2">sse://events &#183; 3 pesanan aktif</text>
 
   <!-- customer phone -->
   <g filter="url(#liftSm)">
-    <rect x="72" y="64" width="240" height="272" rx="30" fill="#12171a"/>
+    <rect x="72" y="64" width="240" height="272" rx="30" fill="#102B31" stroke="#2DD4BF" stroke-opacity="0.28"/>
     <rect x="80" y="72" width="224" height="256" rx="23" fill="url(#screen)"/>
-    <rect x="160" y="80" width="64" height="6" rx="3" fill="#22292c"/>
+    <rect x="160" y="80" width="64" height="6" rx="3" fill="#193B42"/>
   </g>
   <text class="s th" x="96" y="122">Meja 05</text>
-  <text class="s" x="96" y="141" font-size="11.5" fill="#93a09a">Budi &#183; 3 item</text>
-  <line x1="96" y1="154" x2="288" y2="154" stroke="#ffffff" stroke-opacity="0.08"/>
-      <text class="s" x="96" y="166" font-size="13.5" fill="#dfe7e2">Nasi Goreng &#215;2</text>
-    <text class="s" x="288" y="166" text-anchor="end" font-size="13.5" fill="#a9b5af">Rp30.000</text>
-    <text class="s" x="96" y="192" font-size="13.5" fill="#dfe7e2">Es Teh &#215;2</text>
-    <text class="s" x="288" y="192" text-anchor="end" font-size="13.5" fill="#a9b5af">Rp10.000</text>
-    <text class="s" x="96" y="218" font-size="13.5" fill="#dfe7e2">Keripik</text>
-    <text class="s" x="288" y="218" text-anchor="end" font-size="13.5" fill="#a9b5af">Rp4.000</text>
-  <line x1="96" y1="238" x2="288" y2="238" stroke="#ffffff" stroke-opacity="0.08"/>
-  <text class="s" x="96" y="262" font-size="12.5" fill="#93a09a">Total</text>
-  <text class="s" x="288" y="262" text-anchor="end" font-size="16" font-weight="700" fill="#f3f7f4">Rp44.000</text>
-  <rect x="96" y="276" width="192" height="36" rx="10" fill="#27AE60"/>
-  <text class="s" x="192" y="299" text-anchor="middle" font-size="13.5" font-weight="700" fill="#06210f">Kirim ke kasir</text>
+  <text class="s" x="96" y="141" font-size="11.5" fill="#88B8B2">Budi &#183; 3 item</text>
+  <line x1="96" y1="154" x2="288" y2="154" stroke="#5EEAD4" stroke-opacity="0.14"/>
+  <text class="s" x="96" y="170" font-size="13.5" fill="#ECFDF5">Nasi Goreng &#215;2</text>
+  <text class="s" x="288" y="170" text-anchor="end" font-size="13.5" fill="#88B8B2">Rp30.000</text>
+  <text class="s" x="96" y="196" font-size="13.5" fill="#ECFDF5">Es Teh &#215;2</text>
+  <text class="s" x="288" y="196" text-anchor="end" font-size="13.5" fill="#88B8B2">Rp10.000</text>
+  <text class="s" x="96" y="222" font-size="13.5" fill="#ECFDF5">Keripik</text>
+  <text class="s" x="288" y="222" text-anchor="end" font-size="13.5" fill="#88B8B2">Rp4.000</text>
+  <line x1="96" y1="238" x2="288" y2="238" stroke="#5EEAD4" stroke-opacity="0.14"/>
+  <text class="s" x="96" y="262" font-size="12.5" fill="#88B8B2">Total</text>
+  <text class="s" x="288" y="262" text-anchor="end" font-size="16" font-weight="700" fill="#ECFDF5">Rp44.000</text>
+  <rect x="96" y="276" width="192" height="36" rx="10" fill="#2DD4BF"/>
+  <text class="s" x="192" y="299" text-anchor="middle" font-size="13.5" font-weight="700" fill="#042422">Kirim ke kasir</text>
 
   <!-- realtime link -->
-  <path d="M312 300 C352 300 352 150 396 150" fill="none" stroke="#27AE60" stroke-width="1.6" stroke-dasharray="5 5"/>
-  <circle cx="312" cy="300" r="3" fill="#27AE60"/>
-  <circle cx="396" cy="150" r="3" fill="#27AE60"/>
-  <text class="m" x="332" y="238" font-size="10" fill="#276b47">cart_update</text>
+  <path d="M312 294 C352 294 352 158 398 158" fill="none" stroke="#2DD4BF" stroke-width="1.8" stroke-dasharray="5 5"/>
+  <circle cx="312" cy="294" r="3.5" fill="#5EEAD4"/>
+  <circle cx="398" cy="158" r="3.5" fill="#5EEAD4"/>
+  <text class="m" x="327" y="242" font-size="10" fill="#5EEAD4">cart_update</text>
 
-  <text class="s cap" x="64" y="392">pos-app</text>
-  <text class="m capm" x="1136" y="392" text-anchor="end">FASTAPI &#183; POSTGRESQL &#183; REACT</text>
+  <text class="s cap" x="64" y="390">pos-app</text>
+  <text class="m capm" x="1136" y="390" text-anchor="end">FASTAPI &#183; POSTGRESQL &#183; REACT</text>
 
-  <rect x="0.5" y="0.5" width="1199" height="419" rx="15" fill="none" stroke="#ddd3bd"/>
+  <rect x="0.5" y="0.5" width="1199" height="419" rx="15.5" fill="none" stroke="#2DD4BF" stroke-opacity="0.38"/>
 </svg>

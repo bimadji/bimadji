@@ -69,15 +69,15 @@ Object distance estimation from a single webcam using YOLOv8 bounding boxes and 
 ## Stack
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3-3776AB?logo=python&logoColor=white" alt="Python">
-  <img src="https://img.shields.io/badge/PostgreSQL-15%2B-4169E1?logo=postgresql&logoColor=white" alt="PostgreSQL">
-  <img src="https://img.shields.io/badge/FastAPI-REST%20%26%20SSE-009688?logo=fastapi&logoColor=white" alt="FastAPI">
-  <img src="https://img.shields.io/badge/Supabase-Postgres-3FCF8E?logo=supabase&logoColor=white" alt="Supabase">
-  <img src="https://img.shields.io/badge/TypeScript-Next.js%20%26%20React-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
-  <img src="https://img.shields.io/badge/Flutter-Dart%20%26%20SQLite-02569B?logo=flutter&logoColor=white" alt="Flutter">
-  <img src="https://img.shields.io/badge/C%2B%2B-17-00599C?logo=cplusplus&logoColor=white" alt="C++">
-  <img src="https://img.shields.io/badge/ROS-Robotics-22314E?logo=ros&logoColor=white" alt="ROS">
-  <img src="https://img.shields.io/badge/OpenCV-4-5C3EE8?logo=opencv&logoColor=white" alt="OpenCV">
+  <img src="https://img.shields.io/badge/Python-3-0F3D3A?labelColor=08171B&logo=python&logoColor=5EEAD4" alt="Python">
+  <img src="https://img.shields.io/badge/PostgreSQL-15%2B-0F3D3A?labelColor=08171B&logo=postgresql&logoColor=5EEAD4" alt="PostgreSQL">
+  <img src="https://img.shields.io/badge/FastAPI-REST%20%26%20SSE-0F3D3A?labelColor=08171B&logo=fastapi&logoColor=5EEAD4" alt="FastAPI">
+  <img src="https://img.shields.io/badge/Supabase-Postgres-0F3D3A?labelColor=08171B&logo=supabase&logoColor=5EEAD4" alt="Supabase">
+  <img src="https://img.shields.io/badge/TypeScript-Next.js%20%26%20React-0F3D3A?labelColor=08171B&logo=typescript&logoColor=5EEAD4" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Flutter-Dart%20%26%20SQLite-0F3D3A?labelColor=08171B&logo=flutter&logoColor=5EEAD4" alt="Flutter">
+  <img src="https://img.shields.io/badge/C%2B%2B-17-0F3D3A?labelColor=08171B&logo=cplusplus&logoColor=5EEAD4" alt="C++">
+  <img src="https://img.shields.io/badge/ROS-Robotics-0F3D3A?labelColor=08171B&logo=ros&logoColor=5EEAD4" alt="ROS">
+  <img src="https://img.shields.io/badge/OpenCV-4-0F3D3A?labelColor=08171B&logo=opencv&logoColor=5EEAD4" alt="OpenCV">
 </p>
 
 ---

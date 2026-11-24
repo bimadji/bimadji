@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate dynamic Code Pet and 3D Contribution City SVGs (dark & light) for a GitHub profile."""
+"""Generate unified Dark Teal / Aurora Code Pet and 3D Contribution City SVGs for a GitHub profile."""
 
 from __future__ import annotations
 
@@ -10,31 +10,30 @@ import json
 import math
 import os
 import random
-import urllib.error
 import urllib.parse
 import urllib.request
 from pathlib import Path
 from typing import Any
 
-LANG_META: dict[str, tuple[str, str]] = {
-    "Python": ("#3572A5", "PY"),
-    "TypeScript": ("#3178C6", "TS"),
-    "JavaScript": ("#F1E05A", "JS"),
-    "HTML": ("#E34C26", "5"),
-    "Dart": ("#00B4AB", "DT"),
-    "C++": ("#F34B7D", "C+"),
-    "C": ("#555555", "C"),
-    "PHP": ("#4F5D95", "PHP"),
-    "Java": ("#B07219", "JV"),
-    "Shell": ("#89E051", "SH"),
-    "Go": ("#00ADD8", "GO"),
-    "Rust": ("#DEA584", "RS"),
-    "CSS": ("#663399", "CS"),
+LANG_CODES: dict[str, str] = {
+    "Python": "PY",
+    "TypeScript": "TS",
+    "JavaScript": "JS",
+    "HTML": "5",
+    "Dart": "DT",
+    "C++": "C+",
+    "C": "C",
+    "PHP": "PHP",
+    "Java": "JV",
+    "Shell": "SH",
+    "Go": "GO",
+    "Rust": "RS",
+    "CSS": "CS",
 }
 
 
 def http_json(url: str, method: str = "GET", headers: dict[str, str] | None = None, body: bytes | None = None) -> Any:
-    req_headers = {"User-Agent": "bimadji-profile-widget-generator/1.0", "Accept": "application/json"}
+    req_headers = {"User-Agent": "bimadji-profile-widget-generator/2.0", "Accept": "application/json"}
     if headers:
         req_headers.update(headers)
     req = urllib.request.Request(url, data=body, headers=req_headers, method=method)
@@ -42,7 +41,15 @@ def http_json(url: str, method: str = "GET", headers: dict[str, str] | None = No
         return json.loads(resp.read().decode("utf-8"))
 
 
-def fetch_via_graphql(username: str, token: str) -> tuple[list[list[dict[str, Any]]], list[tuple[str, str]]]:
+def select_top_languages(lang_scores: dict[str, int]) -> list[str]:
+    """Prefer programming languages over pure markup (HTML/CSS) when 4+ languages exist."""
+    markup = {"HTML", "CSS"}
+    ordered = sorted(lang_scores.items(), key=lambda kv: kv[1], reverse=True)
+    code_first = [kv[0] for kv in ordered if kv[0] not in markup] + [kv[0] for kv in ordered if kv[0] in markup]
+    return code_first[:4]
+
+
+def fetch_via_graphql(username: str, token: str) -> tuple[list[list[dict[str, Any]]], list[str]]:
     query = """
     query($login: String!) {
       user(login: $login) {
@@ -65,7 +72,6 @@ def fetch_via_graphql(username: str, token: str) -> tuple[list[list[dict[str, An
                 size
                 node {
                   name
-                  color
                 }
               }
             }
@@ -92,27 +98,12 @@ def fetch_via_graphql(username: str, token: str) -> tuple[list[list[dict[str, An
         weeks.append(days)
 
     lang_sizes: dict[str, int] = {}
-    lang_colors: dict[str, str] = {}
     for repo in user["repositories"]["nodes"]:
         for edge in repo.get("languages", {}).get("edges", []):
             name = edge["node"]["name"]
-            color = edge["node"].get("color") or LANG_META.get(name, ("#64748B", name[:2].upper()))[0]
             lang_sizes[name] = lang_sizes.get(name, 0) + int(edge["size"])
-            lang_colors[name] = color
 
-    return weeks, select_top_languages(lang_sizes, lang_colors)
-
-
-def select_top_languages(lang_scores: dict[str, int], lang_colors: dict[str, str] | None = None) -> list[tuple[str, str]]:
-    """Prefer programming languages over pure markup (HTML/CSS) when 4+ languages exist."""
-    markup = {"HTML", "CSS"}
-    ordered = sorted(lang_scores.items(), key=lambda kv: kv[1], reverse=True)
-    code_first = [kv for kv in ordered if kv[0] not in markup] + [kv for kv in ordered if kv[0] in markup]
-    result: list[tuple[str, str]] = []
-    for name, _ in code_first[:4]:
-        color = (lang_colors or {}).get(name) or LANG_META.get(name, ("#64748B", name[:2].upper()))[0]
-        result.append((name, color))
-    return result
+    return weeks, select_top_languages(lang_sizes)
 
 
 def group_flat_days_into_weeks(flat_days: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
@@ -121,7 +112,7 @@ def group_flat_days_into_weeks(flat_days: list[dict[str, Any]]) -> list[list[dic
     current_week: list[dict[str, Any]] = []
     for item in sorted_days:
         d_obj = dt.date.fromisoformat(item["date"])
-        weekday_sun0 = (d_obj.weekday() + 1) % 7  # Sun=0 .. Sat=6
+        weekday_sun0 = (d_obj.weekday() + 1) % 7
         if weekday_sun0 == 0 and current_week:
             weeks.append(current_week)
             current_week = []
@@ -143,19 +134,17 @@ def score_repos_languages(repos: list[dict[str, Any]]) -> dict[str, int]:
     return lang_weights
 
 
-def fetch_public_fallback(username: str) -> tuple[list[list[dict[str, Any]]], list[tuple[str, str]]]:
+def fetch_public_fallback(username: str) -> tuple[list[list[dict[str, Any]]], list[str]]:
     contrib_data = http_json(f"https://github-contributions-api.jogruber.de/v4/{urllib.parse.quote(username)}?y=last")
     weeks = group_flat_days_into_weeks(contrib_data.get("contributions", []))
-
     repos = http_json(f"https://api.github.com/users/{urllib.parse.quote(username)}/repos?per_page=100&sort=updated")
     return weeks, select_top_languages(score_repos_languages(repos))
 
 
-def load_from_files(contribs_file: Path, repos_file: Path | None) -> tuple[list[list[dict[str, Any]]], list[tuple[str, str]]]:
+def load_from_files(contribs_file: Path, repos_file: Path | None) -> tuple[list[list[dict[str, Any]]], list[str]]:
     raw = json.loads(contribs_file.read_text(encoding="utf-8"))
     weeks = group_flat_days_into_weeks(raw.get("contributions", []))
-
-    top_langs: list[tuple[str, str]] = []
+    top_langs: list[str] = []
     if repos_file and repos_file.exists():
         repos = json.loads(repos_file.read_text(encoding="utf-8"))
         top_langs = select_top_languages(score_repos_languages(repos))
@@ -164,7 +153,6 @@ def load_from_files(contribs_file: Path, repos_file: Path | None) -> tuple[list[
 
 def compute_metrics(weeks: list[list[dict[str, Any]]]) -> dict[str, Any]:
     all_days = [d for w in weeks for d in w]
-    # Trailing 365 days for headline annual totals
     trailing_days = all_days[-365:] if len(all_days) > 365 else all_days
     total_contributions = sum(d["count"] for d in all_days)
     active_days = sum(1 for d in all_days if d["count"] > 0)
@@ -174,7 +162,6 @@ def compute_metrics(weeks: list[list[dict[str, Any]]]) -> dict[str, Any]:
     week_totals = [sum(d["count"] for d in w) for w in eval_weeks]
     active_weeks = sum(1 for total in week_totals if total > 0)
 
-    # Consecutive active weeks (allow current incomplete week to carry streak from prior week)
     streak = 0
     idx = len(week_totals) - 1
     if idx >= 0 and week_totals[idx] == 0 and len(eval_weeks[idx]) < 7:
@@ -205,158 +192,120 @@ def compute_metrics(weeks: list[list[dict[str, Any]]]) -> dict[str, Any]:
     }
 
 
-def render_language_icon(name: str, x: float, y: float, color: str) -> str:
-    """Render a crisp 14x14 mini emblem inside each language pill."""
-    _, code = LANG_META.get(name, (color, name[:2].upper()))
-    text_fill = "#081018" if name in {"JavaScript", "Shell", "Dart"} else "#FFFFFF"
+def render_language_icon(name: str, x: float, y: float, badge_fill: str) -> str:
+    code = LANG_CODES.get(name, name[:2].upper())
     font_size = "7.5" if len(code) <= 2 else "6.2"
     return (
-        f'<rect x="{x:.1f}" y="{y:.1f}" width="15" height="15" rx="3.5" fill="{color}"/>'
+        f'<rect x="{x:.1f}" y="{y:.1f}" width="15" height="15" rx="3.5" fill="{badge_fill}"/>'
         f'<text x="{x + 7.5:.1f}" y="{y + 10.3:.1f}" text-anchor="middle" '
-        f'font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" '
-        f'font-size="{font_size}" font-weight="800" fill="{text_fill}">{html.escape(code)}</text>'
+        f'font-family="SFMono-Regular,Menlo,Consolas,monospace" '
+        f'font-size="{font_size}" font-weight="800" fill="#042422">{html.escape(code)}</text>'
     )
 
 
 def render_code_pet_svg(
     username: str,
     metrics: dict[str, Any],
-    top_langs: list[tuple[str, str]],
+    top_langs: list[str],
     mode: str = "dark",
 ) -> str:
-    is_dark = mode == "dark"
+    """Render Code Pet in the unified Dark Teal / Aurora design system."""
     stage = metrics["stage"]
     total = metrics["total"]
     active_weeks = metrics["active_weeks"]
     streak = min(metrics["streak_weeks"], 13)
+    border_opacity = "0.38" if mode == "dark" else "0.58"
 
     if not top_langs:
-        top_langs = [("Python", "#3572A5"), ("TypeScript", "#3178C6"), ("HTML", "#E34C26"), ("Dart", "#00B4AB")]
+        top_langs = ["Python", "TypeScript", "Dart", "C++"]
 
-    # Theme palette (WCAG AA compliant in both dark & light modes)
-    if is_dark:
-        card_bg = "#0B0F14"
-        card_stroke = "#1E293B"
-        hab_c0, hab_c1, hab_c2 = "#14425A", "#0B2433", "#061219"
-        floor_fill = "#050E14"
-        hud_text = "#7EE7D6"
-        pill_bg, pill_stroke, pill_fg = "#14532D", "#22C55E", "#86EFAC"
-        if stage == "resting":
-            pill_bg, pill_stroke, pill_fg = "#1E293B", "#64748B", "#CBD5E1"
-        elif stage == "vivid":
-            pill_bg, pill_stroke, pill_fg = "#3B0764", "#C084FC", "#F3E8FF"
-        chip_bg = "#081520"
-        title_num = "#F8FAFC"
-        sub_main = "#94A3B8"
-        sub_dim = "#64748B"
-        seg_empty = "#1E293B"
-        seg_fill = "#34D399"
-        shadow_fill = "#020609"
-    else:
-        card_bg = "#F8FAFC"
-        card_stroke = "#CBD5E1"
-        hab_c0, hab_c1, hab_c2 = "#E0F2FE", "#BAE6FD", "#DBEAFE"
-        floor_fill = "#CBD5E1"
-        hud_text = "#0F5257"
-        pill_bg, pill_stroke, pill_fg = "#DCFCE7", "#16A34A", "#14532D"
-        if stage == "resting":
-            pill_bg, pill_stroke, pill_fg = "#E2E8F0", "#64748B", "#334155"
-        elif stage == "vivid":
-            pill_bg, pill_stroke, pill_fg = "#F3E8FF", "#9333EA", "#581C87"
-        chip_bg = "#FFFFFF"
-        title_num = "#0F172A"
-        sub_main = "#334155"
-        sub_dim = "#475569"
-        seg_empty = "#E2E8F0"
-        seg_fill = "#059669"
-        shadow_fill = "#64748B"
+    pill_bg, pill_stroke, pill_fg = "#0D3B38", "#2DD4BF", "#5EEAD4"
+    if stage == "resting":
+        pill_bg, pill_stroke, pill_fg = "#102B31", "#67A8A1", "#88B8B2"
 
-    # Deterministic ambient particles
-    rng = random.Random(f"code-pet-{username}")
+    # Deterministic aurora fireflies
+    rng = random.Random(f"aurora-pet-{username}")
     particles: list[str] = []
-    p_colors = ["#FDE68A", "#A7F3D0", "#7DD3FC"] if is_dark else ["#0284C7", "#059669", "#D97706"]
-    p_opacity = "0.75" if is_dark else "0.35"
+    p_colors = ["#5EEAD4", "#2DD4BF", "#99F6E4", "#FCD34D"]
     for _ in range(14):
-        px = rng.randint(60, 820)
-        py = rng.randint(52, 285)
-        if 345 <= px <= 535 and 105 <= py <= 275:
+        px = rng.randint(64, 1136)
+        py = rng.randint(52, 275)
+        if 480 <= px <= 720 and 95 <= py <= 275:
             continue
-        pr = rng.uniform(1.5, 3.1)
+        pr = rng.uniform(1.6, 3.2)
         pc = rng.choice(p_colors)
         delay = rng.uniform(-6.0, 0.0)
         dur = rng.uniform(5.2, 8.6)
         particles.append(
-            f'<circle cx="{px}" cy="{py}" r="{pr:.1f}" fill="{pc}" opacity="{p_opacity}" '
+            f'<circle cx="{px}" cy="{py}" r="{pr:.1f}" fill="{pc}" opacity="0.72" '
             f'class="pet-fly" style="animation-delay:{delay:.1f}s;animation-duration:{dur:.1f}s"/>'
         )
 
-    # Pet colors accented by user's top languages
-    accent_a = top_langs[0][1] if len(top_langs) > 0 else "#E34C26"
-    accent_b = top_langs[1][1] if len(top_langs) > 1 else "#3572A5"
-    accent_c = top_langs[2][1] if len(top_langs) > 2 else "#3178C6"
-    accent_d = top_langs[3][1] if len(top_langs) > 3 else "#00B4AB"
-
-    # Expressive face based on stage
     if stage == "resting":
         eyes_svg = (
-            '<path d="M407 196 Q417 204 427 196" fill="none" stroke="#1E293B" stroke-width="3.2" stroke-linecap="round"/>'
-            '<path d="M453 196 Q463 204 473 196" fill="none" stroke="#1E293B" stroke-width="3.2" stroke-linecap="round"/>'
-            '<path d="M433 213 Q440 217 447 213" fill="none" stroke="#1E293B" stroke-width="2.6" stroke-linecap="round"/>'
-            '<text x="492" y="146" font-family="ui-monospace,monospace" font-size="15" font-weight="700" fill="#93C5FD" class="pet-zzz">z</text>'
-            '<text x="508" y="128" font-family="ui-monospace,monospace" font-size="19" font-weight="700" fill="#BFDBFE" class="pet-zzz" style="animation-delay:-1.2s">Z</text>'
+            '<path d="M567 188 Q577 196 587 188" fill="none" stroke="#042422" stroke-width="3.2" stroke-linecap="round"/>'
+            '<path d="M613 188 Q623 196 633 188" fill="none" stroke="#042422" stroke-width="3.2" stroke-linecap="round"/>'
+            '<path d="M593 205 Q600 209 607 205" fill="none" stroke="#042422" stroke-width="2.6" stroke-linecap="round"/>'
+            '<text x="654" y="138" font-family="SFMono-Regular,Menlo,monospace" font-size="15" font-weight="700" fill="#5EEAD4" class="pet-zzz">z</text>'
+            '<text x="670" y="120" font-family="SFMono-Regular,Menlo,monospace" font-size="19" font-weight="700" fill="#99F6E4" class="pet-zzz" style="animation-delay:-1.2s">Z</text>'
         )
         motion_class = "pet-breathe"
     else:
         eyes_svg = (
             '<g class="pet-blink">'
-            '<ellipse cx="417" cy="193" rx="11.5" ry="13.5" fill="#FFFFFF"/>'
-            '<circle cx="419" cy="195" r="7.2" fill="#0F172A"/>'
-            '<circle cx="422" cy="191" r="2.7" fill="#FFFFFF"/>'
-            '<ellipse cx="463" cy="193" rx="11.5" ry="13.5" fill="#FFFFFF"/>'
-            '<circle cx="461" cy="195" r="7.2" fill="#0F172A"/>'
-            '<circle cx="464" cy="191" r="2.7" fill="#FFFFFF"/>'
+            '<ellipse cx="577" cy="185" rx="11.5" ry="13.5" fill="#ECFDF5"/>'
+            '<circle cx="579" cy="187" r="7.2" fill="#042422"/>'
+            '<circle cx="582" cy="183" r="2.7" fill="#FFFFFF"/>'
+            '<ellipse cx="623" cy="185" rx="11.5" ry="13.5" fill="#ECFDF5"/>'
+            '<circle cx="621" cy="187" r="7.2" fill="#042422"/>'
+            '<circle cx="624" cy="183" r="2.7" fill="#FFFFFF"/>'
             '</g>'
-            '<path d="M431 211 Q440 221 449 211" fill="none" stroke="#18181B" stroke-width="3.2" stroke-linecap="round"/>'
+            '<path d="M591 203 Q600 213 609 203" fill="none" stroke="#042422" stroke-width="3.2" stroke-linecap="round"/>'
         )
         motion_class = "pet-hop"
 
     vivid_halo = ""
     if stage in {"active", "vivid"}:
         vivid_halo = (
-            '<circle cx="440" cy="196" r="82" fill="none" stroke="url(#pet-aura)" '
-            'stroke-width="2.5" stroke-dasharray="8 6" opacity="0.55" class="pet-spin"/>'
+            '<circle cx="600" cy="188" r="84" fill="none" stroke="#5EEAD4" '
+            'stroke-width="2" stroke-dasharray="8 6" opacity="0.5" class="pet-spin"/>'
         )
 
-    # Language pill layout centered at x=440, y=300
+    # Unified Aurora language pills centered at x=600, y=286
+    teal_shades = ["#5EEAD4", "#2DD4BF", "#14B8A6", "#99F6E4"]
     pill_specs: list[tuple[str, str, float]] = []
-    for lname, lcolor in top_langs[:4]:
-        w = max(78.0, 38.0 + len(lname) * 7.6)
-        pill_specs.append((lname, lcolor, w))
+    for i, lname in enumerate(top_langs[:4]):
+        w = max(82.0, 40.0 + len(lname) * 7.6)
+        pill_specs.append((lname, teal_shades[i % len(teal_shades)], w))
     gap = 10.0
     total_pills_w = sum(p[2] for p in pill_specs) + gap * (len(pill_specs) - 1)
-    cursor_x = 440.0 - total_pills_w / 2.0
+    cursor_x = 600.0 - total_pills_w / 2.0
     pills_svg: list[str] = []
-    for lname, lcolor, pw in pill_specs:
-        text_col = "#F1F5F9" if is_dark else "#0F172A"
+    for lname, lshade, pw in pill_specs:
         pills_svg.append(
-            f'<g transform="translate({cursor_x:.1f}, 296)">'
-            f'<rect width="{pw:.1f}" height="27" rx="13.5" fill="{chip_bg}" fill-opacity="0.88" '
-            f'stroke="{lcolor}" stroke-opacity="0.65" stroke-width="1.2"/>'
-            f'{render_language_icon(lname, 8.0, 6.0, lcolor)}'
-            f'<text x="29" y="17.8" font-family="-apple-system,BlinkMacSystemFont,\'Segoe UI\',sans-serif" '
-            f'font-size="12" font-weight="700" fill="{text_col}">{html.escape(lname)}</text>'
+            f'<g transform="translate({cursor_x:.1f}, 286)">'
+            f'<rect width="{pw:.1f}" height="27" rx="13.5" fill="#08171B" fill-opacity="0.9" '
+            f'stroke="#2DD4BF" stroke-opacity="0.45" stroke-width="1.2"/>'
+            f'{render_language_icon(lname, 8.0, 6.0, lshade)}'
+            f'<text x="29" y="17.8" font-family="Segoe UI,Helvetica Neue,Arial,sans-serif" '
+            f'font-size="12" font-weight="700" fill="#ECFDF5">{html.escape(lname)}</text>'
             f'</g>'
         )
         cursor_x += pw + gap
 
     # 13-week streak meter on bottom-right
-    seg_w, seg_h, seg_gap = 19.0, 12.0, 5.5
-    seg_start_x = 848.0 - (13 * seg_w + 12 * seg_gap)
+    seg_w, seg_h, seg_gap = 20.0, 12.0, 6.0
+    seg_start_x = 1136.0 - (13 * seg_w + 12 * seg_gap)
     segs_svg: list[str] = []
     for i in range(13):
         sx = seg_start_x + i * (seg_w + seg_gap)
-        fill = seg_fill if i < streak else seg_empty
-        segs_svg.append(f'<rect x="{sx:.1f}" y="388" width="{seg_w}" height="{seg_h}" rx="3.5" fill="{fill}"/>')
+        if i < streak:
+            segs_svg.append(f'<rect x="{sx:.1f}" y="382" width="{seg_w}" height="{seg_h}" rx="3.5" fill="#2DD4BF"/>')
+        else:
+            segs_svg.append(
+                f'<rect x="{sx:.1f}" y="382" width="{seg_w}" height="{seg_h}" rx="3.5" '
+                f'fill="#0D2329" stroke="#2DD4BF" stroke-opacity="0.18"/>'
+            )
 
     weeks_goal_text = (
         f"{active_weeks}/52 active weeks · vivid unlocked"
@@ -365,29 +314,29 @@ def render_code_pet_svg(
     )
     aria = f"{username}'s code pet: {stage}, {total} contributions this year, {streak} of 13 week streak"
 
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="880" height="456" viewBox="0 0 880 456" role="img" aria-label="{html.escape(aria)}">
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="440" viewBox="0 0 1200 440" role="img" aria-label="{html.escape(aria)}">
   <defs>
-    <radialGradient id="pet-hab" cx="50%" cy="42%" r="72%">
-      <stop offset="0%" stop-color="{hab_c0}"/>
-      <stop offset="62%" stop-color="{hab_c1}"/>
-      <stop offset="100%" stop-color="{hab_c2}"/>
+    <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#061519"/>
+      <stop offset="52%" stop-color="#0B2429"/>
+      <stop offset="100%" stop-color="#051216"/>
+    </linearGradient>
+    <radialGradient id="pet-hab" cx="50%" cy="42%" r="68%">
+      <stop offset="0%" stop-color="#113B42"/>
+      <stop offset="60%" stop-color="#0A2328"/>
+      <stop offset="100%" stop-color="#07161A"/>
     </radialGradient>
     <radialGradient id="pet-body" cx="36%" cy="28%" r="78%">
-      <stop offset="0%" stop-color="#FF9A76"/>
-      <stop offset="52%" stop-color="#F05936"/>
-      <stop offset="100%" stop-color="#B83227"/>
+      <stop offset="0%" stop-color="#99F6E4"/>
+      <stop offset="48%" stop-color="#2DD4BF"/>
+      <stop offset="100%" stop-color="#0D9488"/>
     </radialGradient>
     <radialGradient id="pet-belly" cx="50%" cy="45%" r="65%">
-      <stop offset="0%" stop-color="#FDBA9A" stop-opacity="0.85"/>
-      <stop offset="100%" stop-color="#F05936" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#ECFDF5" stop-opacity="0.78"/>
+      <stop offset="100%" stop-color="#2DD4BF" stop-opacity="0"/>
     </radialGradient>
-    <linearGradient id="pet-aura" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="{accent_a}"/>
-      <stop offset="50%" stop-color="{accent_b}"/>
-      <stop offset="100%" stop-color="{accent_d}"/>
-    </linearGradient>
     <clipPath id="pet-stage">
-      <rect x="20" y="18" width="840" height="320" rx="20"/>
+      <rect x="40" y="22" width="1120" height="310" rx="14"/>
     </clipPath>
     <style>
       .pet-hop {{ animation: petHop 1.75s cubic-bezier(.28,.82,.42,1) infinite; transform-box: fill-box; transform-origin: center bottom; }}
@@ -407,8 +356,8 @@ def render_code_pet_svg(
         50% {{ transform: scale(1.03, 0.97); }}
       }}
       @keyframes petShadow {{
-        0%, 100% {{ transform: scaleX(1); opacity: 0.34; }}
-        34% {{ transform: scaleX(0.78); opacity: 0.18; }}
+        0%, 100% {{ transform: scaleX(1); opacity: 0.42; }}
+        34% {{ transform: scaleX(0.78); opacity: 0.2; }}
       }}
       @keyframes petBlink {{
         0%, 94%, 100% {{ transform: scaleY(1); }}
@@ -431,60 +380,62 @@ def render_code_pet_svg(
     </style>
   </defs>
 
-  <rect x="0.5" y="0.5" width="879" height="455" rx="22" fill="{card_bg}" stroke="{card_stroke}"/>
+  <rect width="1200" height="440" rx="16" fill="url(#stage)"/>
 
   <g clip-path="url(#pet-stage)">
-    <rect x="20" y="18" width="840" height="320" fill="url(#pet-hab)"/>
-    <ellipse cx="440" cy="356" rx="470" ry="74" fill="{floor_fill}" opacity="0.72"/>
+    <rect x="40" y="22" width="1120" height="310" fill="url(#pet-hab)"/>
+    <ellipse cx="600" cy="350" rx="600" ry="72" fill="#041013" opacity="0.78"/>
     {"".join(particles)}
 
-    <text x="46" y="54" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" font-weight="700" letter-spacing="2.2" fill="{hud_text}">CODE PET · @{html.escape(username.upper())}</text>
-    <g transform="translate(766, 35)">
-      <rect width="72" height="26" rx="13" fill="{pill_bg}" stroke="{pill_stroke}" stroke-opacity="0.65"/>
-      <text x="36" y="17" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" font-weight="800" letter-spacing="1.2" fill="{pill_fg}">{stage.upper()}</text>
+    <text x="68" y="56" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11.5" font-weight="700" letter-spacing="2.2" fill="#5EEAD4">CODE PET &#183; @{html.escape(username.upper())}</text>
+    <g transform="translate(1060, 38)">
+      <rect width="74" height="24" rx="12" fill="{pill_bg}" stroke="{pill_stroke}" stroke-opacity="0.6"/>
+      <text x="37" y="16" text-anchor="middle" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10" font-weight="800" letter-spacing="1.2" fill="{pill_fg}">{stage.upper()}</text>
     </g>
 
     {vivid_halo}
-    <ellipse cx="440" cy="272" rx="58" ry="10.5" fill="{shadow_fill}" opacity="0.34" class="pet-shadow"/>
+    <ellipse cx="600" cy="264" rx="58" ry="10.5" fill="#02080A" opacity="0.42" class="pet-shadow"/>
 
     <g class="{motion_class}">
       <!-- Ears -->
-      <path d="M392 152 C384 114, 414 112, 420 144 Z" fill="url(#pet-body)"/>
-      <path d="M397 146 C393 125, 411 124, 414 142 Z" fill="{accent_b}" opacity="0.65"/>
-      <path d="M488 152 C496 114, 466 112, 460 144 Z" fill="url(#pet-body)"/>
-      <path d="M483 146 C487 125, 469 124, 466 142 Z" fill="{accent_b}" opacity="0.65"/>
+      <path d="M552 144 C544 106, 574 104, 580 136 Z" fill="url(#pet-body)"/>
+      <path d="M557 138 C553 117, 571 116, 574 134 Z" fill="#0F766E" opacity="0.75"/>
+      <path d="M648 144 C656 106, 626 104, 620 136 Z" fill="url(#pet-body)"/>
+      <path d="M643 138 C647 117, 629 116, 626 134 Z" fill="#0F766E" opacity="0.75"/>
 
       <!-- Feet -->
-      <ellipse cx="414" cy="259" rx="15" ry="8.5" fill="#B83227"/>
-      <ellipse cx="466" cy="259" rx="15" ry="8.5" fill="#B83227"/>
+      <ellipse cx="574" cy="251" rx="15" ry="8.5" fill="#0F766E"/>
+      <ellipse cx="626" cy="251" rx="15" ry="8.5" fill="#0F766E"/>
 
-      <!-- Main rounded body -->
-      <rect x="376" y="136" width="128" height="122" rx="58" fill="url(#pet-body)"/>
-      <ellipse cx="440" cy="218" rx="44" ry="34" fill="url(#pet-belly)"/>
-      <ellipse cx="412" cy="156" rx="18" ry="7" transform="rotate(-18 412 156)" fill="#FFFFFF" opacity="0.22"/>
+      <!-- Main aurora spirit body -->
+      <rect x="536" y="128" width="128" height="122" rx="58" fill="url(#pet-body)"/>
+      <ellipse cx="600" cy="210" rx="44" ry="34" fill="url(#pet-belly)"/>
+      <ellipse cx="572" cy="148" rx="18" ry="7" transform="rotate(-18 572 148)" fill="#FFFFFF" opacity="0.34"/>
 
-      <!-- Rosy cheeks & language-tinted spots -->
-      <ellipse cx="399" cy="208" rx="9.5" ry="5.5" fill="#FB7185" opacity="0.55"/>
-      <ellipse cx="481" cy="208" rx="9.5" ry="5.5" fill="#FB7185" opacity="0.55"/>
-      <circle cx="392" cy="220" r="5.2" fill="{accent_d}" opacity="0.88"/>
-      <circle cx="487" cy="183" r="5.2" fill="{accent_c}" opacity="0.88"/>
-      <circle cx="478" cy="225" r="3.8" fill="{accent_b}" opacity="0.85"/>
+      <!-- Warm amber cheeks & bioluminescent spots -->
+      <ellipse cx="559" cy="200" rx="9.5" ry="5.5" fill="#FCD34D" opacity="0.52"/>
+      <ellipse cx="641" cy="200" rx="9.5" ry="5.5" fill="#FCD34D" opacity="0.52"/>
+      <circle cx="552" cy="212" r="4.8" fill="#ECFDF5" opacity="0.75"/>
+      <circle cx="647" cy="175" r="4.8" fill="#ECFDF5" opacity="0.75"/>
+      <circle cx="638" cy="217" r="3.6" fill="#0F766E" opacity="0.65"/>
 
       {eyes_svg}
     </g>
 
     {"".join(pills_svg)}
   </g>
+  <rect x="40" y="22" width="1120" height="310" rx="14" fill="none" stroke="#2DD4BF" stroke-opacity="0.22"/>
 
   <!-- Bottom telemetry bar -->
-  <text x="32" y="396" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-size="38" font-weight="700" fill="{title_num}">{total}</text>
-  <text x="{44 + len(str(total)) * 22}" y="394" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="14.5" font-weight="500" fill="{sub_main}">contributions this year · {stage}</text>
-  <text x="32" y="424" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="12" fill="{sub_dim}">{html.escape(weeks_goal_text)}</text>
+  <text x="64" y="388" font-family="Georgia,'Times New Roman',serif" font-style="italic" font-size="38" font-weight="700" fill="#ECFDF5">{total}</text>
+  <text x="{76 + len(str(total)) * 22}" y="386" font-family="Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="14.5" font-weight="500" fill="#88B8B2">contributions this year &#183; {stage}</text>
+  <text x="64" y="415" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11.5" fill="#67A8A1">{html.escape(weeks_goal_text)}</text>
 
-  <text x="{seg_start_x:.1f}" y="376" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11" font-weight="700" letter-spacing="1.6" fill="{sub_main}">STREAK {streak}/13 WEEKS</text>
+  <text x="{seg_start_x:.1f}" y="369" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" font-weight="700" letter-spacing="1.6" fill="#5EEAD4">STREAK {streak}/13 WEEKS</text>
   {"".join(segs_svg)}
 
-  <text x="848" y="428" text-anchor="end" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11" fill="{sub_dim}">@{html.escape(username)}</text>
+  <text x="1136" y="416" text-anchor="end" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.4" fill="#67A8A1">@{html.escape(username.upper())}</text>
+  <rect x="0.5" y="0.5" width="1199" height="439" rx="15.5" fill="none" stroke="#2DD4BF" stroke-opacity="{border_opacity}"/>
 </svg>
 """
 
@@ -495,44 +446,20 @@ def render_contribution_city_svg(
     metrics: dict[str, Any],
     mode: str = "dark",
 ) -> str:
-    is_dark = mode == "dark"
+    """Render 3D Contribution City in the exact same 1200px Dark Teal / Aurora system."""
     total = metrics["total"]
     active_days = metrics["active_days"]
     busiest = max(metrics["busiest_day"], 1)
+    border_opacity = "0.38" if mode == "dark" else "0.58"
 
-    if is_dark:
-        bg_0, bg_1, bg_2 = "#042F2E", "#115E59", "#042F2E"
-        border_col, border_op = "#2DD4BF", "0.52"
-        kicker_col = "#5EEAD4"
-        num_col = "#ECFDF5"
-        label_col = "#99F6E4"
-        meta_col = "#5EEAD4"
-        glow_col, glow_op = "#2DD4BF", "0.22"
-        # (top_face, left_face, right_face) across 5 intensity tiers
-        palette = [
-            ("#1B6F69", "#155B56", "#104844"),
-            ("#229B8B", "#1B7E71", "#156359"),
-            ("#2CC0AC", "#239C8B", "#1B7B6E"),
-            ("#43DEC8", "#32B8A5", "#259182"),
-            ("#7CF7E4", "#55D6C2", "#3AA998"),
-        ]
-    else:
-        bg_0, bg_1, bg_2 = "#F0FDFA", "#CCFBF1", "#E6FFFA"
-        border_col, border_op = "#0D9488", "0.35"
-        kicker_col = "#0F766E"
-        num_col = "#042F2E"
-        label_col = "#115E59"
-        meta_col = "#0F766E"
-        glow_col, glow_op = "#14B8A6", "0.18"
-        palette = [
-            ("#B2E8DF", "#94D6CB", "#7AC2B6"),
-            ("#5EEAD4", "#38C9B4", "#26A693"),
-            ("#2DD4BF", "#14B8A6", "#0D9488"),
-            ("#14B8A6", "#0D9488", "#0F766E"),
-            ("#0D9488", "#0F766E", "#115E59"),
-        ]
+    palette = [
+        ("#134E4A", "#0F3F3C", "#0B2F2D"),
+        ("#1F8A7D", "#186E64", "#12544C"),
+        ("#28B5A2", "#1F9182", "#176F64"),
+        ("#3ED8C3", "#2EB09E", "#22897B"),
+        ("#7CF7E4", "#52D4C0", "#38A897"),
+    ]
 
-    # Build dense 53x7 matrix (pad missing weekday slots with 0)
     padded_weeks = weeks[-53:]
     grid: list[tuple[int, int, int]] = []
     for w_idx, w_days in enumerate(padded_weeks):
@@ -543,13 +470,12 @@ def render_contribution_city_svg(
                 continue
             grid.append((w_idx, d_idx, by_day.get(d_idx, 0)))
 
-    # Strict painter's order: smaller (w + d) has higher screen elevation (further back)
     grid.sort(key=lambda item: (item[0] + item[1], item[0], item[1]))
 
-    dx = 8.35
-    dy = 4.82
-    x0 = 350.0
-    y0 = 104.0
+    dx = 10.6
+    dy = 6.1
+    x0 = 470.0
+    y0 = 86.0
 
     prisms: list[str] = []
     for w_idx, d_idx, count in grid:
@@ -557,11 +483,11 @@ def render_contribution_city_svg(
         by = y0 + (w_idx + d_idx) * dy
 
         if count <= 0:
-            h = 2.6
+            h = 3.0
             tier = 0
         else:
             ratio = count / busiest
-            h = 8.0 + 88.0 * (0.35 * math.sqrt(ratio) + 0.65 * ratio)
+            h = 10.0 + 96.0 * (0.35 * math.sqrt(ratio) + 0.65 * ratio)
             if ratio < 0.15:
                 tier = 1
             elif ratio < 0.38:
@@ -574,14 +500,11 @@ def render_contribution_city_svg(
         c_top, c_left, c_right = palette[tier]
         ty = by - h
 
-        # Top diamond: N -> E -> S -> W
         top_pts = f"{bx:.2f},{ty - dy:.2f} {bx + dx:.2f},{ty:.2f} {bx:.2f},{ty + dy:.2f} {bx - dx:.2f},{ty:.2f}"
-        # Left face: W_top -> S_top -> S_base -> W_base
         left_pts = f"{bx - dx:.2f},{ty:.2f} {bx:.2f},{ty + dy:.2f} {bx:.2f},{by + dy:.2f} {bx - dx:.2f},{by:.2f}"
-        # Right face: S_top -> E_top -> E_base -> S_base
         right_pts = f"{bx:.2f},{ty + dy:.2f} {bx + dx:.2f},{ty:.2f} {bx + dx:.2f},{by:.2f} {bx:.2f},{by + dy:.2f}"
 
-        stroke_attr = f' stroke="{bg_0}" stroke-width="0.35" stroke-opacity="0.45"' if count == 0 else ""
+        stroke_attr = ' stroke="#061519" stroke-width="0.45" stroke-opacity="0.55"' if count == 0 else ""
         prisms.append(
             f'<g>'
             f'<polygon points="{left_pts}" fill="{c_left}"/>'
@@ -592,36 +515,39 @@ def render_contribution_city_svg(
 
     aria = f"{username} 3D contribution city: {total} contributions in the last year across {active_days} active days, busiest day {metrics['busiest_day']}"
 
-    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="880" height="428" viewBox="0 0 880 428" role="img" aria-label="{html.escape(aria)}">
+    return f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="460" viewBox="0 0 1200 460" role="img" aria-label="{html.escape(aria)}">
   <defs>
-    <linearGradient id="city-bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0%" stop-color="{bg_0}"/>
-      <stop offset="54%" stop-color="{bg_1}"/>
-      <stop offset="100%" stop-color="{bg_2}"/>
+    <linearGradient id="stage" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#061519"/>
+      <stop offset="52%" stop-color="#0B2429"/>
+      <stop offset="100%" stop-color="#051216"/>
     </linearGradient>
     <radialGradient id="city-downtown-glow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="{glow_col}" stop-opacity="{glow_op}"/>
-      <stop offset="100%" stop-color="{glow_col}" stop-opacity="0"/>
+      <stop offset="0%" stop-color="#2DD4BF" stop-opacity="0.20"/>
+      <stop offset="100%" stop-color="#2DD4BF" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
-  <rect x="0.5" y="0.5" width="879" height="427" rx="20" fill="url(#city-bg)" stroke="{border_col}" stroke-opacity="{border_op}"/>
-  <ellipse cx="690" cy="320" rx="185" ry="95" fill="url(#city-downtown-glow)"/>
+  <rect width="1200" height="460" rx="16" fill="url(#stage)"/>
+  <ellipse cx="920" cy="340" rx="240" ry="115" fill="url(#city-downtown-glow)"/>
 
   <g>
     {"".join(prisms)}
   </g>
 
   <!-- Left architectural summary -->
-  <text x="36" y="54" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11.5" font-weight="700" letter-spacing="2.2" fill="{kicker_col}">CONTRIBUTION CITY</text>
-  <text x="36" y="94" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="36" font-weight="800" fill="{num_col}">{total}</text>
-  <text x="36" y="116" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="13" font-weight="600" fill="{label_col}">contributions in the last year</text>
+  <text x="64" y="68" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11.5" font-weight="700" letter-spacing="2.2" fill="#5EEAD4">CONTRIBUTION CITY</text>
+  <text x="64" y="118" font-family="Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="44" font-weight="800" fill="#ECFDF5">{total}</text>
+  <text x="64" y="144" font-family="Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="14" font-weight="500" fill="#D5F5EE">contributions in the last year</text>
 
-  <text x="36" y="152" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="{label_col}">{active_days} active days</text>
-  <text x="36" y="174" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="12.5" font-weight="600" fill="{label_col}">Busiest day: {metrics['busiest_day']}</text>
+  <rect x="64" y="168" width="210" height="68" rx="12" fill="#0B1E23" stroke="#2DD4BF" stroke-opacity="0.22"/>
+  <text x="82" y="196" font-family="Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="13" font-weight="600" fill="#ECFDF5">{active_days} active days</text>
+  <text x="82" y="220" font-family="Segoe UI,Helvetica Neue,Arial,sans-serif" font-size="13" font-weight="600" fill="#5EEAD4">Busiest day: {metrics['busiest_day']}</text>
 
-  <text x="36" y="382" font-family="ui-monospace,SFMono-Regular,Menlo,Consolas,monospace" font-size="11.5" font-weight="600" fill="{meta_col}" opacity="0.88">@{html.escape(username)}</text>
-  <text x="36" y="401" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif" font-size="10.5" fill="{meta_col}" opacity="0.68">53-week isometric skyline · auto-updated</text>
+  <text x="64" y="396" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="11.5" font-weight="700" letter-spacing="1.4" fill="#5EEAD4">@{html.escape(username.upper())}</text>
+  <text x="64" y="416" font-family="SFMono-Regular,Menlo,Consolas,monospace" font-size="10.5" letter-spacing="1.4" fill="#67A8A1">53-WEEK ISOMETRIC SKYLINE &#183; AUTO-UPDATED</text>
+
+  <rect x="0.5" y="0.5" width="1199" height="459" rx="15.5" fill="none" stroke="#2DD4BF" stroke-opacity="{border_opacity}"/>
 </svg>
 """
 
@@ -632,11 +558,7 @@ def main() -> None:
     parser.add_argument("--output-dir", default="assets", help="Output directory for SVG files")
     parser.add_argument("--contribs-file", default="", help="Optional local contributions JSON file")
     parser.add_argument("--repos-file", default="", help="Optional local repos JSON file")
-    parser.add_argument(
-        "--langs",
-        default="",
-        help="Optional comma-separated top languages override (e.g. HTML,Python,TypeScript,Dart)",
-    )
+    parser.add_argument("--langs", default="", help="Optional comma-separated top languages override")
     args = parser.parse_args()
 
     token = os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN") or ""
@@ -654,8 +576,7 @@ def main() -> None:
         weeks, top_langs = fetch_public_fallback(args.username)
 
     if args.langs:
-        names = [x.strip() for x in args.langs.split(",") if x.strip()]
-        top_langs = [(n, LANG_META.get(n, ("#64748B", n[:2].upper()))[0]) for n in names[:4]]
+        top_langs = [x.strip() for x in args.langs.split(",") if x.strip()][:4]
 
     metrics = compute_metrics(weeks)
     out_dir = Path(args.output_dir)
@@ -669,11 +590,11 @@ def main() -> None:
         (out_dir / f"contribution-city-{mode}.svg").write_text(city_svg, encoding="utf-8")
 
     print(
-        f"Generated widgets for @{args.username}: "
+        f"Generated Aurora widgets for @{args.username}: "
         f"total={metrics['total']}, active_days={metrics['active_days']}, "
         f"busiest={metrics['busiest_day']}, active_weeks={metrics['active_weeks']}, "
         f"streak={metrics['streak_weeks']}, stage={metrics['stage']}, "
-        f"langs={[x[0] for x in top_langs]}"
+        f"langs={top_langs}"
     )
 
 
